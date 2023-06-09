@@ -14,6 +14,7 @@ use App\Http\Controllers\ConservationStateController;
 use App\Http\Controllers\IsbnCodeController;
 use App\Http\Controllers\BookController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserBookController;
 
 /*
 |--------------------------------------------------------------------------
@@ -127,6 +128,14 @@ Route::middleware('api')->group(function (){
 
     // Users
     Route::post('/users', [UserController::class, 'store']);
+
+    // User Books
+    Route::get('/user_books', [UserBookController::class, 'index']);
+    Route::get('/user_books/{user_book}', [UserBookController::class, 'show']);
+    Route::post('/user_books', [UserBookController::class, 'store']);
+    Route::put('/user_books/{user_book}', [UserBookController::class, 'update']);
+    Route::delete('/user_books/{user_book}', [UserBookController::class, 'delete']);
+
 
 });
 

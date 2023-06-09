@@ -1417,13 +1417,13 @@
                 ]
             }
         },
-        "/api/isbn-codes": {
+        "/api/isbn_codes": {
             "get": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Get all ISBN codes",
-                "operationId": "9219b162bd56d4f761b918dc2c237160",
+                "operationId": "f2d33fc7e48343200980694b371840ad",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1446,16 +1446,16 @@
                 ]
             }
         },
-        "/api/isbn-codes/{isbnCode}": {
+        "/api/isbn_codes/{isbn_code}": {
             "get": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Get a specific ISBN code",
-                "operationId": "b82aaf858a6b8a82a3236c597ac41b41",
+                "operationId": "e12c3cfb1df04675e959b800337e6911",
                 "parameters": [
                     {
-                        "name": "isbnCode",
+                        "name": "isbn_code",
                         "in": "path",
                         "description": "ISBN Code ID",
                         "required": true,
@@ -1483,13 +1483,13 @@
                 ]
             }
         },
-        "/api/auth/isbn-codes": {
+        "/api/auth/isbn_codes": {
             "post": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Create a new ISBN code",
-                "operationId": "78ef74c038d48402a158f8fb7c2ef1a7",
+                "operationId": "2ac78bad4080e235a3e8db8cfe3bf179",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1519,16 +1519,16 @@
                 ]
             }
         },
-        "/api/admin-only/isbn-codes/{isbnCode}": {
+        "/api/admin-only/isbn_codes/{isbn_code}": {
             "put": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Update an existing ISBN code",
-                "operationId": "d7761269018fc87c1c262aadbb13b599",
+                "operationId": "3f362033f6b7d03b8b69380a6988855f",
                 "parameters": [
                     {
-                        "name": "isbnCode",
+                        "name": "isbn_code",
                         "in": "path",
                         "description": "ISBN Code ID",
                         "required": true,
@@ -1570,10 +1570,10 @@
                     "Isbn Code"
                 ],
                 "summary": "Delete an existing ISBN code",
-                "operationId": "a8e7036f984fa3585b15e99b0448f8b9",
+                "operationId": "8b2b413d3a9b9364352723640787d8f7",
                 "parameters": [
                     {
-                        "name": "isbnCode",
+                        "name": "isbn_code",
                         "in": "path",
                         "description": "ISBN Code ID",
                         "required": true,
@@ -2304,6 +2304,325 @@
                 ]
             }
         },
+        "/api/user_books": {
+            "get": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Get all UserBook",
+                "operationId": "45c13542b83d5d2e46744d2ecdaa168f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_books": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserBook"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Create a new user book",
+                "operationId": "cb5cd008d7820bae0fa8a6d22b36cc9c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "book_id": {
+                                        "type": "integer"
+                                    },
+                                    "comments": {
+                                        "type": "string"
+                                    },
+                                    "purchase_price": {
+                                        "type": "number"
+                                    },
+                                    "selling_price": {
+                                        "type": "number"
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "on_sale_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "sold_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "conservation_state_id": {
+                                        "type": "integer"
+                                    },
+                                    "status_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "User Book created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBook"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user_books/{user_book}": {
+            "get": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Get a user book by ID",
+                "operationId": "31676bd51191501016fdd7df97f998a6",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_book": {
+                                            "$ref": "#/components/schemas/UserBook"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "put": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Update a user book",
+                "operationId": "a5dbce3980ab063684dd0eac8ec5bc28",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "book_id": {
+                                        "type": "integer"
+                                    },
+                                    "comments": {
+                                        "type": "string"
+                                    },
+                                    "purchase_price": {
+                                        "type": "number"
+                                    },
+                                    "selling_price": {
+                                        "type": "number"
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "on_sale_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "sold_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "conservation_state_id": {
+                                        "type": "integer"
+                                    },
+                                    "status_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Book updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBook"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Delete a user book",
+                "operationId": "325e445c5e7dda32691cb1c1bc433079",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User Book deleted successfully"
+                    },
+                    "404": {
+                        "description": "User Book not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
         "/api/admin-only/users": {
             "get": {
                 "tags": [
@@ -2346,49 +2665,6 @@
                     },
                     "404": {
                         "description": "User not found"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            },
-            "put": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Update a user",
-                "operationId": "799b4244516de980bb2f45bab3280942",
-                "parameters": [
-                    {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "User updated"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    },
-                    "422": {
-                        "description": "Validation error"
                     }
                 },
                 "security": [
@@ -2459,6 +2735,51 @@
                     }
                 ]
             }
+        },
+        "/api/auth/users/{id}": {
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update a user",
+                "operationId": "fcbb6e9607caa5bd628196124be1a8a6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User updated"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -2471,11 +2792,11 @@
                         "readOnly": true,
                         "example": 1
                     },
-                    "name": {
+                    "firstname": {
                         "type": "string",
                         "example": "John"
                     },
-                    "surname": {
+                    "lastname": {
                         "type": "string",
                         "example": "Doe"
                     },
@@ -2762,19 +3083,20 @@
             },
             "User": {
                 "required": [
-                    "name",
+                    "firstname",
+                    "lastname",
                     "email",
                     "password",
                     "role"
                 ],
                 "properties": {
-                    "fistname": {
-                        "description": "Name of the user",
+                    "firstname": {
+                        "description": "First name of the user",
                         "type": "string",
                         "example": "Jean"
                     },
                     "lastname": {
-                        "description": "Surname of the user",
+                        "description": "Last name of the user",
                         "type": "string",
                         "example": "Michem"
                     },
@@ -2799,6 +3121,60 @@
                         "description": "Remember token of the user",
                         "type": "string",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "UserBook": {
+                "required": [
+                    "user_id",
+                    "book_id"
+                ],
+                "properties": {
+                    "user_id": {
+                        "description": "ID de l'utilisateur",
+                        "type": "integer"
+                    },
+                    "book_id": {
+                        "description": "ID du livre",
+                        "type": "integer"
+                    },
+                    "comments": {
+                        "description": "Commentaires sur le livre",
+                        "type": "string"
+                    },
+                    "purchase_price": {
+                        "description": "Prix d'achat du livre",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "selling_price": {
+                        "description": "Prix de vente du livre",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "purchase_date": {
+                        "description": "Date d'achat du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "on_sale_date": {
+                        "description": "Date de mise en vente du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "sold_date": {
+                        "description": "Date de vente du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "conservation_state_id": {
+                        "description": "ID de l'état de conservation du livre",
+                        "type": "integer"
+                    },
+                    "status_id": {
+                        "description": "ID du statut du livre",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

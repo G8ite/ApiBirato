@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Editor;
 use App\Models\Tag;
 use App\Http\Resources\BookResource;
 use Illuminate\Http\Request;
@@ -62,7 +63,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book = Book::with('tags')->findOrFail($book->id);
+        $book = Book::with('bookTags')->findOrFail($book->id);
 
         return new BookResource($book);
     }
@@ -74,7 +75,7 @@ class BookController extends Controller
      *     summary="Create a new book",
      *     @OA\RequestBody(
      *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Book")
+     *         @OA\JsonContent(ref="#/components/schemas/Book"),
      *     ),
      *     @OA\Response(
      *         response=201,
@@ -104,8 +105,14 @@ class BookController extends Controller
         $book = Book::create($request->all());
 
         if ($request->filled('tags')) {
-            $tags = Tag::whereIn('id', $request->tags)->pluck('id');
-            $book->tags()->sync($tags);
+            $tags = $request->tags; 
+            $book->bookTags()->sync($tags);
+        }
+
+        if ($request->filled('editor_id')) {
+            $editor = Editor::findOrFail($request->editor_id);
+            $book->editor()->associate($editor);
+            $book->save();
         }
 
         return new BookResource($book);
@@ -156,7 +163,7 @@ class BookController extends Controller
             'editor_id' => 'nullable|integer',
 
             'tags' => 'nullable|array',
-            'tags.*' => 'integer|exists:tags,id',
+            'tags.*' => 'distinct|exists:tags,id',
         ]);
 
         $book->fill($request->only([
@@ -170,6 +177,11 @@ class BookController extends Controller
             'isbn_code_id',
             'editor_id',
         ]));
+
+        if ($request->filled('tags')) {
+            $tags = $request->tags; 
+            $book->bookTags()->sync($tags);
+        }
 
         $book->save();
 

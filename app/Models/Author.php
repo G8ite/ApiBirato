@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Model;
  *     schema="Author",
  *     title="Author",
  *     @OA\Property(property="id", type="integer", readOnly=true, example=1),
- *     @OA\Property(property="name", type="string", example="John"),
- *     @OA\Property(property="surname", type="string", example="Doe"),
+ *     @OA\Property(property="firstname", type="string", example="John"),
+ *     @OA\Property(property="lastname", type="string", example="Doe"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
  *     @OA\Property(property="updated_at", type="string", format="date-time")
  * )
@@ -21,8 +21,8 @@ class Author extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'surname',
+        'firstname',
+        'lastname',
     ];
 
     public function books()

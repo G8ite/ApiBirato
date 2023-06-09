@@ -41,4 +41,9 @@ class ConservationState extends Model
     protected $fillable = [
         'state_name',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

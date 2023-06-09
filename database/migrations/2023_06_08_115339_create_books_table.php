@@ -26,12 +26,12 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('editor_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('authors')->constrained('authors');
-            $table->foreign('book_cover_id')->references('id')->on('book_covers')->constrained('authors');
-            $table->foreign('paper_type_id')->references('id')->on('paper_types')->constrained('authors');
-            $table->foreign('format_id')->references('id')->on('formats')->constrained('authors');
-            $table->foreign('isbn_code_id')->references('id')->on('isbn_codes')->constrained('authors');
-            $table->foreign('editor_id')->references('id')->on('editors')->constrained('authors');
+            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('book_cover_id')->references('id')->on('book_covers');
+            $table->foreign('paper_type_id')->references('id')->on('paper_types');
+            $table->foreign('format_id')->references('id')->on('formats');
+            $table->foreign('isbn_code_id')->references('id')->on('isbn_codes');
+            $table->foreign('editor_id')->references('id')->on('editors');
         });
     }
 

@@ -35,8 +35,7 @@ class Book extends Model
         'paper_type_id',
         'format_id',
         'isbn_code_id',
-        'editor',
-        'tags'
+        'editor'
     ];
 
     public function author()
@@ -73,8 +72,18 @@ class Book extends Model
         return $this->belongsTo(Editor::class, 'editor_id');
     }
 
-    public function tags()
+    public function bookTags()
     {
         return $this->belongsToMany(Tag::class, 'book_tag', 'book_id', 'tag_id');
+    }
+
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function userBooks()
+    {
+        return $this->belongsToMany(User::class, 'user_book', 'book_id', 'user_id');
     }
 }

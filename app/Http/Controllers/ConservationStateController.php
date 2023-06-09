@@ -187,6 +187,6 @@ class ConservationStateController extends Controller
     {
         $conservation_state->delete();
 
-        return response()->json(['message' => 'Conservation state deleted successfully'], 204);
+        return response()->json(['message' => 'Conservation state deleted successfully']);
     }
 }

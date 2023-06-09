@@ -96,7 +96,9 @@ class AuthController extends Controller
      */
     public function me()
     {
-        return response()->json(auth()->user());
+        $user = JWTAuth::parseToken()->authenticate();
+
+        return response()->json($user);
     }
 
     /**

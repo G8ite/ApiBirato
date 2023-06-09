@@ -12,17 +12,17 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  * @OA\Schema(
  *     schema="User",
- *     required={"name", "email", "password", "role"},
+ *     required={"firstname", "lastname", "email", "password", "role"},
  *     @OA\Property(
- *         property="fistname",
+ *         property="firstname",
  *         type="string",
- *         description="Name of the user",
+ *         description="First name of the user",
  *         example="Jean"
  *     ),
  *    @OA\Property(
  *        property="lastname",
  *        type="string",
- *        description="Surname of the user",
+ *        description="Last name of the user",
  *        example="Michem"
  *     ),
  *     @OA\Property(
@@ -101,7 +101,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function books()
     {
-        return $this->hasMany(Book::class);
+        return $this->belongsToMany(Book::class, 'book_user', 'user_id', 'book_id');
     }
+
 }
 

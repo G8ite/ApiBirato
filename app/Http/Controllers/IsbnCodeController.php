@@ -13,7 +13,7 @@ class IsbnCodeController extends Controller
 {
     /**
      * @OA\Get(
-     *     path="/api/isbn-codes",
+     *     path="/api/isbn_codes",
      *     tags={"Isbn Code"},
      *     summary="Get all ISBN codes",
      *     @OA\Response(
@@ -38,11 +38,11 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Get(
-     *     path="/api/isbn-codes/{isbnCode}",
+     *     path="/api/isbn_codes/{isbn_code}",
      *     tags={"Isbn Code"},
      *     summary="Get a specific ISBN code",
      *     @OA\Parameter(
-     *         name="isbnCode",
+     *         name="isbn_code",
      *         in="path",
      *         description="ISBN Code ID",
      *         required=true,
@@ -65,7 +65,7 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/auth/isbn-codes",
+     *     path="/api/auth/isbn_codes",
      *     tags={"Isbn Code"},
      *     summary="Create a new ISBN code",
      *     @OA\RequestBody(
@@ -96,11 +96,11 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/admin-only/isbn-codes/{isbnCode}",
+     *     path="/api/admin-only/isbn_codes/{isbn_code}",
      *     tags={"Isbn Code"},
      *     summary="Update an existing ISBN code",
      *     @OA\Parameter(
-     *         name="isbnCode",
+     *         name="isbn_code",
      *         in="path",
      *         description="ISBN Code ID",
      *         required=true,
@@ -140,11 +140,11 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/admin-only/isbn-codes/{isbnCode}",
+     *     path="/api/admin-only/isbn_codes/{isbn_code}",
      *     tags={"Isbn Code"},
      *     summary="Delete an existing ISBN code",
      *     @OA\Parameter(
-     *         name="isbnCode",
+     *         name="isbn_code",
      *         in="path",
      *         description="ISBN Code ID",
      *         required=true,

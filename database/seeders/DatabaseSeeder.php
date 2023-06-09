@@ -24,5 +24,6 @@ class DatabaseSeeder extends Seeder
         \App\Models\Book::factory(10)->create();
         \App\Models\BookTag::factory(10)->create();
         \App\Models\User::factory(10)->create();
+        \App\Models\UserBook::factory(10)->create();
     }
 }
