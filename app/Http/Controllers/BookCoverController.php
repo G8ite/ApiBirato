@@ -19,7 +19,10 @@ class BookCoverController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/BookCover")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -42,7 +45,10 @@ class BookCoverController extends Controller
      *         response=201,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/BookCover")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -75,7 +81,10 @@ class BookCoverController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/BookCover")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(BookCover $book_cover)
@@ -85,7 +94,7 @@ class BookCoverController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/book_covers/{book_cover}",
+     *     path="/api/admin-only/book_covers/{book_cover}",
      *     tags={"Book Covers"},
      *     summary="Update a book cover",
      *     @OA\Parameter(
@@ -106,7 +115,10 @@ class BookCoverController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/BookCover")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, BookCover $book_cover)
@@ -122,7 +134,7 @@ class BookCoverController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/book_covers/{book_cover}",
+     *     path="/api/admin-only/book_covers/{book_cover}",
      *     tags={"Book Covers"},
      *     summary="Delete a book cover",
      *     @OA\Parameter(
@@ -142,7 +154,10 @@ class BookCoverController extends Controller
      *             type="object",
      *             @OA\Property(property="message", type="string", example="Book cover deleted successfully")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(BookCover $book_cover)

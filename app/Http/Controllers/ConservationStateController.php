@@ -26,7 +26,10 @@ class ConservationStateController extends Controller
      *              type="array",
      *              @OA\Items(ref="#/components/schemas/ConservationState")
      *        )    
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -59,7 +62,10 @@ class ConservationStateController extends Controller
      *     @OA\Response(
      *        response=404,
      *       description="Conservation state not found"
-     *    )
+     *    ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(ConservationState $conservation_state)
@@ -69,7 +75,7 @@ class ConservationStateController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/conservation_states",
+     *     path="/api/admin-only/conservation_states",
      *     tags={"Conservation State"},
      *     summary="Create a new conservation state",
      *     @OA\RequestBody(
@@ -83,7 +89,10 @@ class ConservationStateController extends Controller
      *         response=201,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/ConservationState")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -99,7 +108,7 @@ class ConservationStateController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/conservation_states/{conservation_state}",
+     *     path="/api/admin-only/conservation_states/{conservation_state}",
      *     tags={"Conservation State"},
      *     summary="Update a conservation state",
      *      @OA\Parameter(
@@ -128,7 +137,10 @@ class ConservationStateController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Conservation state not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, ConservationState $conservation_state)
@@ -144,7 +156,7 @@ class ConservationStateController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/conservation_states/{conservation_state}",
+     *     path="/api/admin-only/conservation_states/{conservation_state}",
      *     tags={"Conservation State"},
      *     summary="Delete a conservation state",
      *     @OA\Parameter(
@@ -165,7 +177,10 @@ class ConservationStateController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Conservation state not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(ConservationState $conservation_state)

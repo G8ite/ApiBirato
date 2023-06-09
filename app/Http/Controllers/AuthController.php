@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 /**
  * @OA\Tag(
  *     name="Authentification",
- *     description="Endpoints pour l'authentification"
+ *     description=""
  * )
  */
 class AuthController extends Controller
@@ -168,7 +169,13 @@ class AuthController extends Controller
      */
     public function refresh()
     {
-        return $this->respondWithToken(JWTAuth::refresh());
+        try {
+            $newToken = auth()->refresh();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
+        return $this->respondWithToken($newToken);
     }
 
     /**

@@ -19,7 +19,10 @@ class AuthorController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="authors", type="array", @OA\Items(ref="#/components/schemas/Author"))
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -42,7 +45,10 @@ class AuthorController extends Controller
      *         response=201,
      *         description="Author created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Author")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -73,7 +79,10 @@ class AuthorController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Author")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(Author $author)
@@ -83,7 +92,7 @@ class AuthorController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/authors/{author}",
+     *     path="/api/admin-only/authors/{author}",
      *     tags={"Authors"},
      *     summary="Update an existing author",
      *     @OA\Parameter(
@@ -101,7 +110,10 @@ class AuthorController extends Controller
      *         response=200,
      *         description="Author updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Author")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, Author $author)
@@ -123,7 +135,7 @@ class AuthorController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/authors/{author}",
+     *     path="/api/admin-only/authors/{author}",
      *     tags={"Authors"},
      *     summary="Delete an author",
      *     @OA\Parameter(
@@ -139,7 +151,10 @@ class AuthorController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="message", type="string", example="Author deleted successfully")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(Author $author)

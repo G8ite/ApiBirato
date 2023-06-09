@@ -25,7 +25,10 @@ class BookController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Book")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -51,7 +54,10 @@ class BookController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Book")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(Book $book)
@@ -63,7 +69,7 @@ class BookController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/books/{book}",
+     *     path="/api/admin-only/books/{book}",
      *     tags={"Book"},
      *     summary="Update a book",
      *     @OA\Parameter(
@@ -86,7 +92,10 @@ class BookController extends Controller
      *         response=200,
      *         description="Book updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Book")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, Book $book)
@@ -136,7 +145,10 @@ class BookController extends Controller
      *         response=201,
      *         description="Book created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Book")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -166,7 +178,7 @@ class BookController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/books/{book}",
+     *     path="/api/admin-only/books/{book}",
      *     tags={"Book"},
      *     summary="Delete a book",
      *     @OA\Parameter(
@@ -179,7 +191,10 @@ class BookController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Book deleted successfully"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(Book $book)

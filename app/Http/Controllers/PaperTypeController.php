@@ -25,7 +25,10 @@ class PaperTypeController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/PaperType")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -51,7 +54,10 @@ class PaperTypeController extends Controller
      *         response=201,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/PaperType")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -89,7 +95,10 @@ class PaperTypeController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Paper type not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(PaperType $paper_type)
@@ -99,7 +108,7 @@ class PaperTypeController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/paper_types/{paper_type}",
+     *     path="/api/admin-only/paper_types/{paper_type}",
      *     tags={"Paper Type"},
      *     summary="Update a specific paper type",
      *     @OA\Parameter(
@@ -128,7 +137,10 @@ class PaperTypeController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Paper type not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, PaperType $paper_type)
@@ -144,7 +156,7 @@ class PaperTypeController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/paper_types/{paper_type}",
+     *     path="/api/admin-only/paper_types/{paper_type}",
      *     tags={"Paper Type"},
      *     summary="Delete a specific paper type",
      *     @OA\Parameter(
@@ -168,7 +180,10 @@ class PaperTypeController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Paper type not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(PaperType $paper_type)

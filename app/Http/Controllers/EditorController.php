@@ -23,7 +23,10 @@ class EditorController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Editor")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -49,7 +52,10 @@ class EditorController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/Editor")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(Editor $editor)
@@ -70,7 +76,10 @@ class EditorController extends Controller
      *         response=201,
      *         description="Editor created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Editor")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -86,7 +95,7 @@ class EditorController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/editors/{editor}",
+     *     path="/api/admin-only/editors/{editor}",
      *     tags={"Editor"},
      *     summary="Update an existing editor",
      *     @OA\Parameter(
@@ -104,7 +113,10 @@ class EditorController extends Controller
      *         response=200,
      *         description="Editor updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/Editor")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, Editor $editor)
@@ -120,7 +132,7 @@ class EditorController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/editors/{editor}",
+     *     path="/api/admin-only/editors/{editor}",
      *     tags={"Editor"},
      *     summary="Delete an existing editor",
      *     @OA\Parameter(
@@ -133,7 +145,10 @@ class EditorController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="Editor deleted successfully"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(Editor $editor)

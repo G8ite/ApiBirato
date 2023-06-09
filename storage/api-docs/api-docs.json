@@ -191,7 +191,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -220,7 +225,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/authors/{author}": {
@@ -252,14 +262,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/authors/{author}": {
             "put": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Update an existing author",
-                "operationId": "e97e8e808653ecf94e366ee06d549862",
+                "operationId": "1ff15a360e0bc0a7bd4d226bfa9f128a",
                 "parameters": [
                     {
                         "name": "author",
@@ -292,14 +309,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Delete an author",
-                "operationId": "b3dc1987c960be1ed4226a9c9a5e4315",
+                "operationId": "9594266beff843e42ebed85a8228c0db",
                 "parameters": [
                     {
                         "name": "author",
@@ -328,7 +350,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/books": {
@@ -352,7 +379,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -381,7 +413,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/books/{book}": {
@@ -413,14 +450,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/books/{book}": {
             "put": {
                 "tags": [
                     "Book"
                 ],
                 "summary": "Update a book",
-                "operationId": "cf6535a3185059974fb8baaf90b29eaf",
+                "operationId": "2dec9cb24e6fa22b4a5091c57b6ee5de",
                 "parameters": [
                     {
                         "name": "book",
@@ -461,14 +505,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Book"
                 ],
                 "summary": "Delete a book",
-                "operationId": "8b4fa9f9c334696e9dad8aa920bd5a74",
+                "operationId": "6e04007f7d27d0805a8a3a5808c4edae",
                 "parameters": [
                     {
                         "name": "book",
@@ -484,7 +533,12 @@
                     "200": {
                         "description": "Book deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/book_covers": {
@@ -508,7 +562,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -537,7 +596,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/book_covers/{book_cover}": {
@@ -570,14 +634,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/book_covers/{book_cover}": {
             "put": {
                 "tags": [
                     "Book Covers"
                 ],
                 "summary": "Update a book cover",
-                "operationId": "e5e84a095b9515c38c93b0cce2a35d97",
+                "operationId": "1325695226a4765b5a275633f2fced96",
                 "parameters": [
                     {
                         "name": "book_cover",
@@ -611,14 +682,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Book Covers"
                 ],
                 "summary": "Delete a book cover",
-                "operationId": "bea3a2028a3d80dab6e37bb03d45cdc2",
+                "operationId": "a80cac35c460ba04e3ed15c813649ef8",
                 "parameters": [
                     {
                         "name": "book_cover",
@@ -648,7 +724,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/conservation_states": {
@@ -672,44 +753,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Conservation State"
-                ],
-                "summary": "Create a new conservation state",
-                "operationId": "c2636e863667ddadf1fc0cc139a4e06c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "state_name"
-                                ],
-                                "properties": {
-                                    "state_name": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ConservationState"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/conservation_states/{conservation_state}": {
@@ -746,14 +795,65 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/conservation_states": {
+            "post": {
+                "tags": [
+                    "Conservation State"
+                ],
+                "summary": "Create a new conservation state",
+                "operationId": "23bde3b8310a4e83e336e011a93a6011",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "state_name"
+                                ],
+                                "properties": {
+                                    "state_name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConservationState"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/conservation_states/{conservation_state}": {
             "put": {
                 "tags": [
                     "Conservation State"
                 ],
                 "summary": "Update a conservation state",
-                "operationId": "18139734c3a54a73483f095584139a1a",
+                "operationId": "31bf7e706d447a4ff795328e9632c999",
                 "parameters": [
                     {
                         "name": "conservation_state",
@@ -799,14 +899,19 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Conservation State"
                 ],
                 "summary": "Delete a conservation state",
-                "operationId": "a906ec3ab8a9d987b0b70f84253a45a3",
+                "operationId": "58ba437168db5517d7df62d79ba656a9",
                 "parameters": [
                     {
                         "name": "conservation_state",
@@ -827,7 +932,12 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/editors": {
@@ -851,7 +961,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -880,7 +995,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/editors/{editor}": {
@@ -912,14 +1032,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/editors/{editor}": {
             "put": {
                 "tags": [
                     "Editor"
                 ],
                 "summary": "Update an existing editor",
-                "operationId": "27b18bd1295cc6d3f42e400a6646a941",
+                "operationId": "4774470aad545c708c61d13c356841d1",
                 "parameters": [
                     {
                         "name": "editor",
@@ -952,14 +1079,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Editor"
                 ],
                 "summary": "Delete an existing editor",
-                "operationId": "12abb2a2babb419c9398d1fc8150e0d2",
+                "operationId": "83b3f5a9ee34f3637b0417e3f4d51733",
                 "parameters": [
                     {
                         "name": "editor",
@@ -975,7 +1107,12 @@
                     "200": {
                         "description": "Editor deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/formats": {
@@ -1004,7 +1141,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1058,7 +1200,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/formats/{format}": {
@@ -1110,14 +1257,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/formats/{format}": {
             "put": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Update a format",
-                "operationId": "cae191e8e786875c54e516fd03a20374",
+                "operationId": "d0343a3e619265c6e28ceba53239a9e6",
                 "parameters": [
                     {
                         "name": "format",
@@ -1190,14 +1344,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Delete a format",
-                "operationId": "24fec60fa6e29708620fbb1093f4185b",
+                "operationId": "c863a2fa04dedace83ec5fe37ccf5514",
                 "parameters": [
                     {
                         "name": "format",
@@ -1240,7 +1399,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/isbn-codes": {
@@ -1264,7 +1428,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1293,7 +1462,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/isbn-codes/{isbnCode}": {
@@ -1325,14 +1499,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/isbn-codes/{isbnCode}": {
             "put": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Update an existing ISBN code",
-                "operationId": "5e0cf349ea25d23016743f825fdcc662",
+                "operationId": "d7761269018fc87c1c262aadbb13b599",
                 "parameters": [
                     {
                         "name": "isbnCode",
@@ -1365,14 +1546,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Delete an existing ISBN code",
-                "operationId": "8e96abc6719f90acb573dbbe767693bf",
+                "operationId": "a8e7036f984fa3585b15e99b0448f8b9",
                 "parameters": [
                     {
                         "name": "isbnCode",
@@ -1388,7 +1574,12 @@
                     "200": {
                         "description": "ISBN code deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/paper_types": {
@@ -1412,7 +1603,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1449,7 +1645,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/paper_types/{paper_type}": {
@@ -1486,14 +1687,21 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/paper_types/{paper_type}": {
             "put": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Update a specific paper type",
-                "operationId": "e3ecafd7d5314908402c188c0f08f86d",
+                "operationId": "49da592443a94d3e05e26eb574257900",
                 "parameters": [
                     {
                         "name": "paper_type",
@@ -1539,14 +1747,19 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Delete a specific paper type",
-                "operationId": "01e69f53113a6aee9f83301a40c4ea8d",
+                "operationId": "f75de519143854d3519a915037cab67a",
                 "parameters": [
                     {
                         "name": "paper_type",
@@ -1579,7 +1792,12 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/statuses": {
@@ -1603,35 +1821,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Status"
-                ],
-                "summary": "Create a new status",
-                "operationId": "85739a0412fc324e86e6b45af20c7f0c",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Status"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "The created status",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Status"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/statuses/{id}": {
@@ -1666,14 +1861,56 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/statuses": {
+            "post": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Create a new status",
+                "operationId": "548cbc768800dec461afd28fc5c48381",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Status"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Status"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/statuses/{id}": {
             "put": {
                 "tags": [
                     "Status"
                 ],
                 "summary": "Update a status",
-                "operationId": "7ba406b9e828f2ce3a0583d7c56583f6",
+                "operationId": "3a3e4e2c2f5272415da32e0808e7db3b",
                 "parameters": [
                     {
                         "name": "id",
@@ -1708,14 +1945,19 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Status"
                 ],
                 "summary": "Delete a status",
-                "operationId": "103c323a908765c6184e33422a33a566",
+                "operationId": "45d600bd4f5c544b3c9b62660f1987ed",
                 "parameters": [
                     {
                         "name": "id",
@@ -1746,7 +1988,12 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/tags": {
@@ -1775,7 +2022,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -1829,7 +2081,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/tags/{tag}": {
@@ -1881,14 +2138,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/tags/{tag}": {
             "put": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Update a tag",
-                "operationId": "41b49eb4f2a830e150f50252f4d831b8",
+                "operationId": "f3ba124a4e6d33a21a5ba5025029b8f2",
                 "parameters": [
                     {
                         "name": "tag",
@@ -1961,14 +2225,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Delete a tag",
-                "operationId": "0ea3c414fee89af8d1d36299a222206d",
+                "operationId": "f3b21cc865d48b3c28c3f6d5e08e50c0",
                 "parameters": [
                     {
                         "name": "tag",
@@ -2011,48 +2280,6 @@
                             }
                         }
                     }
-                }
-            }
-        },
-        "/api/profile": {
-            "post": {
-                "tags": [
-                    "Profil"
-                ],
-                "summary": "Récupère le profil de l'utilisateur",
-                "operationId": "ce57fc71ce462c05a2dfb8263d8d1c1f",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "user": {
-                                        "description": "Objet représentant l'utilisateur",
-                                        "type": "object"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Profil de l'utilisateur récupéré avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "user": {
-                                            "description": "Objet représentant l'utilisateur",
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
                 },
                 "security": [
                     {
@@ -2061,32 +2288,16 @@
                 ]
             }
         },
-        "/api/users": {
+        "/api/admin-only/users": {
             "get": {
                 "tags": [
-                    "Utilisateurs"
+                    "User"
                 ],
-                "summary": "Récupère tous les utilisateurs",
-                "operationId": "c457726701591d1183b53aa71fc13441",
+                "summary": "Get all users",
+                "operationId": "c87f836c1ee8451a9140e68262d23d0f",
                 "responses": {
                     "200": {
-                        "description": "Liste des utilisateurs récupérée avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "users": {
-                                            "type": "array",
-                                            "items": {
-                                                "description": "Objet représentant un utilisateur",
-                                                "type": "object"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Successful operation"
                     }
                 },
                 "security": [
@@ -2097,59 +2308,26 @@
             },
             "post": {
                 "tags": [
-                    "Utilisateurs"
+                    "User"
                 ],
-                "summary": "Crée un nouvel utilisateur",
-                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "summary": "Create a new user",
+                "operationId": "badc72c36edca171f5691a8b235bb75c",
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "properties": {
-                                    "user": {
-                                        "description": "Objet représentant les informations de l'utilisateur",
-                                        "properties": {
-                                            "name": {
-                                                "description": "Nom de l'utilisateur",
-                                                "type": "string"
-                                            },
-                                            "email": {
-                                                "description": "Email de l'utilisateur",
-                                                "type": "string"
-                                            },
-                                            "password": {
-                                                "description": "Mot de passe de l'utilisateur",
-                                                "type": "string"
-                                            },
-                                            "role": {
-                                                "description": "Rôle de l'utilisateur (0 = utilisateur, 1 = administrateur)",
-                                                "type": "boolean"
-                                            }
-                                        },
-                                        "type": "object"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/User"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "Utilisateur créé avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "user": {
-                                            "description": "Objet représentant l'utilisateur créé",
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "User created"
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 },
                 "security": [
@@ -2159,44 +2337,29 @@
                 ]
             }
         },
-        "/api/users/{id}": {
+        "/api/admin-only/users/{id}": {
             "get": {
                 "tags": [
-                    "Utilisateurs"
+                    "User"
                 ],
-                "summary": "Récupère un utilisateur par son ID",
-                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
+                "summary": "Get a user by ID",
+                "operationId": "26062c878c27d1fad92955a11b220786",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID de l'utilisateur",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "integer"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Utilisateur récupéré avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "user": {
-                                            "description": "Objet représentant l'utilisateur",
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Successful operation"
                     },
                     "404": {
-                        "description": "Utilisateur non trouvé"
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -2207,56 +2370,39 @@
             },
             "put": {
                 "tags": [
-                    "Utilisateurs"
+                    "User"
                 ],
-                "summary": "Met à jour un utilisateur existant",
-                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
+                "summary": "Update a user",
+                "operationId": "799b4244516de980bb2f45bab3280942",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID de l'utilisateur à mettre à jour",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "integer"
                         }
                     }
                 ],
                 "requestBody": {
+                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "properties": {
-                                    "user": {
-                                        "description": "Objet représentant les nouvelles informations de l'utilisateur",
-                                        "type": "object"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/User"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "Utilisateur mis à jour avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "user": {
-                                            "description": "Objet représentant l'utilisateur mis à jour",
-                                            "type": "object"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "User updated"
                     },
                     "404": {
-                        "description": "Utilisateur non trouvé"
+                        "description": "User not found"
+                    },
+                    "422": {
+                        "description": "Validation error"
                     }
                 },
                 "security": [
@@ -2267,41 +2413,26 @@
             },
             "delete": {
                 "tags": [
-                    "Utilisateurs"
+                    "User"
                 ],
-                "summary": "Supprime un utilisateur",
-                "operationId": "e169ebcc01eeee2f5e57e5bfc064bc7f",
+                "summary": "Delete a user",
+                "operationId": "f3a26e18f68e0556277568975f7dd3e5",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
-                        "description": "ID de l'utilisateur à supprimer",
                         "required": true,
                         "schema": {
-                            "type": "integer",
-                            "format": "int64"
+                            "type": "integer"
                         }
                     }
                 ],
                 "responses": {
-                    "200": {
-                        "description": "Utilisateur supprimé avec succès",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "Message indiquant que l'utilisateur a été supprimé avec succès",
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                    "204": {
+                        "description": "User deleted"
                     },
                     "404": {
-                        "description": "Utilisateur non trouvé"
+                        "description": "User not found"
                     }
                 },
                 "security": [
@@ -2669,7 +2800,7 @@
     "tags": [
         {
             "name": "Authentification",
-            "description": "Endpoints pour l'authentification"
+            "description": ""
         },
         {
             "name": "Book"
@@ -2689,6 +2820,10 @@
         },
         {
             "name": "Status"
+        },
+        {
+            "name": "User",
+            "description": ""
         }
     ]
 }

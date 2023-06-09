@@ -18,7 +18,10 @@ class TagController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="tags", type="array", @OA\Items(ref="#/components/schemas/Tag"))
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -52,7 +55,10 @@ class TagController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -91,7 +97,10 @@ class TagController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(Tag $tag)
@@ -101,7 +110,7 @@ class TagController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/tags/{tag}",
+     *     path="/api/admin-only/tags/{tag}",
      *     tags={"Tags"},
      *     summary="Update a tag",
      *     @OA\Parameter(
@@ -137,7 +146,10 @@ class TagController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, Tag $tag)
@@ -153,7 +165,7 @@ class TagController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/tags/{tag}",
+     *     path="/api/admin-only/tags/{tag}",
      *     tags={"Tags"},
      *     summary="Delete a tag",
      *     @OA\Parameter(
@@ -176,7 +188,10 @@ class TagController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(Tag $tag)

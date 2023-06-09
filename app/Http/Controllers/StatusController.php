@@ -23,7 +23,10 @@ class StatusController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/Status")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -52,7 +55,10 @@ class StatusController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Status not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show($id)
@@ -63,7 +69,7 @@ class StatusController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/statuses",
+     *     path="/api/admin-only/statuses",
      *     summary="Create a new status",
      *     tags={"Status"},
      *     @OA\RequestBody(
@@ -73,7 +79,10 @@ class StatusController extends Controller
      *         response=201,
      *         description="The created status",
      *         @OA\JsonContent(ref="#/components/schemas/Status")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -84,7 +93,7 @@ class StatusController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/statuses/{id}",
+     *     path="/api/admin-only/statuses/{id}",
      *     summary="Update a status",
      *     tags={"Status"},
      *     @OA\Parameter(
@@ -105,7 +114,10 @@ class StatusController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Status not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, $id)
@@ -117,7 +129,7 @@ class StatusController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/statuses/{id}",
+     *     path="/api/admin-only/statuses/{id}",
      *     summary="Delete a status",
      *     tags={"Status"},
      *     @OA\Parameter(
@@ -137,7 +149,10 @@ class StatusController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Status not found"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete($id)

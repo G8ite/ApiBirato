@@ -23,7 +23,10 @@ class IsbnCodeController extends Controller
      *             type="array",
      *             @OA\Items(ref="#/components/schemas/IsbnCode")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -49,7 +52,10 @@ class IsbnCodeController extends Controller
      *         response=200,
      *         description="Successful operation",
      *         @OA\JsonContent(ref="#/components/schemas/IsbnCode")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(IsbnCode $isbnCode)
@@ -70,7 +76,10 @@ class IsbnCodeController extends Controller
      *         response=201,
      *         description="ISBN code created successfully",
      *         @OA\JsonContent(ref="#/components/schemas/IsbnCode")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -87,7 +96,7 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/isbn-codes/{isbnCode}",
+     *     path="/api/admin-only/isbn-codes/{isbnCode}",
      *     tags={"Isbn Code"},
      *     summary="Update an existing ISBN code",
      *     @OA\Parameter(
@@ -105,7 +114,10 @@ class IsbnCodeController extends Controller
      *         response=200,
      *         description="ISBN code updated successfully",
      *         @OA\JsonContent(ref="#/components/schemas/IsbnCode")
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, IsbnCode $isbnCode)
@@ -128,7 +140,7 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/isbn-codes/{isbnCode}",
+     *     path="/api/admin-only/isbn-codes/{isbnCode}",
      *     tags={"Isbn Code"},
      *     summary="Delete an existing ISBN code",
      *     @OA\Parameter(
@@ -141,7 +153,10 @@ class IsbnCodeController extends Controller
      *     @OA\Response(
      *         response=200,
      *         description="ISBN code deleted successfully"
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(IsbnCode $isbnCode)
