@@ -66,28 +66,20 @@
                 }
             }
         },
-        "/api/me": {
+        "/api/auth/me": {
             "get": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Récupère les informations de l'utilisateur authentifié",
-                "description": "Renvoie les informations sur l'utilisateur authentifié.",
-                "operationId": "me",
+                "summary": "Récupère l'utilisateur authentifié",
+                "operationId": "b9abb1a7a74670a19c215c2c133f14d8",
                 "responses": {
                     "200": {
-                        "description": "Informations de l'utilisateur",
+                        "description": "Utilisateur authentifié récupéré avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "email": {
-                                            "type": "string"
-                                        }
-                                    },
+                                    "description": "Objet représentant l'utilisateur authentifié",
                                     "type": "object"
                                 }
                             }
@@ -96,19 +88,18 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
         },
-        "/api/logout": {
+        "/api/auth/logout": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Déconnexion de l'utilisateur",
-                "description": "Déconnecte l'utilisateur (révoque le token JWT).",
-                "operationId": "logout",
+                "summary": "Déconnecte l'utilisateur (invalide le jeton)",
+                "operationId": "69281b12abb272c76871f19cb17ca563",
                 "responses": {
                     "200": {
                         "description": "Déconnexion réussie",
@@ -117,6 +108,7 @@
                                 "schema": {
                                     "properties": {
                                         "message": {
+                                            "description": "Message indiquant que la déconnexion s'est déroulée avec succès",
                                             "type": "string"
                                         }
                                     },
@@ -128,36 +120,36 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
         },
-        "/api/refresh": {
+        "/api/auth/refresh": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Rafraîchit le token JWT de l'utilisateur",
-                "description": "Rafraîchit le token JWT de l'utilisateur.",
-                "operationId": "refresh",
+                "summary": "Actualise le jeton",
+                "operationId": "b2eae7a8032954d25b46c7ec6f489c68",
                 "responses": {
                     "200": {
-                        "description": "Nouveau token JWT",
+                        "description": "Jeton actualisé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "access_token": {
+                                            "description": "Nouveau jeton d'accès",
                                             "type": "string"
                                         },
                                         "token_type": {
-                                            "type": "string",
-                                            "example": "bearer"
+                                            "description": "Type de jeton (Bearer)",
+                                            "type": "string"
                                         },
                                         "expires_in": {
-                                            "type": "integer",
-                                            "example": "3600"
+                                            "description": "Durée de validité du nouveau jeton en secondes",
+                                            "type": "integer"
                                         }
                                     },
                                     "type": "object"
@@ -168,7 +160,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
@@ -2022,133 +2014,301 @@
                 }
             }
         },
-        "/api/users": {
-            "get": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Get all users",
-                "operationId": "c457726701591d1183b53aa71fc13441",
-                "responses": {
-                    "200": {
-                        "description": "Successful operation"
-                    }
-                }
-            },
+        "/api/profile": {
             "post": {
                 "tags": [
-                    "User"
+                    "Profil"
                 ],
-                "summary": "Create a new user",
-                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "summary": "Récupère le profil de l'utilisateur",
+                "operationId": "ce57fc71ce462c05a2dfb8263d8d1c1f",
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "properties": {
+                                    "user": {
+                                        "description": "Objet représentant l'utilisateur",
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Profil de l'utilisateur récupéré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "description": "Objet représentant l'utilisateur",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "get": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Récupère tous les utilisateurs",
+                "operationId": "c457726701591d1183b53aa71fc13441",
+                "responses": {
+                    "200": {
+                        "description": "Liste des utilisateurs récupérée avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "users": {
+                                            "type": "array",
+                                            "items": {
+                                                "description": "Objet représentant un utilisateur",
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Utilisateurs"
+                ],
+                "summary": "Crée un nouvel utilisateur",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user": {
+                                        "description": "Objet représentant les informations de l'utilisateur",
+                                        "properties": {
+                                            "name": {
+                                                "description": "Nom de l'utilisateur",
+                                                "type": "string"
+                                            },
+                                            "email": {
+                                                "description": "Email de l'utilisateur",
+                                                "type": "string"
+                                            },
+                                            "password": {
+                                                "description": "Mot de passe de l'utilisateur",
+                                                "type": "string"
+                                            },
+                                            "role": {
+                                                "description": "Rôle de l'utilisateur (0 = utilisateur, 1 = administrateur)",
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "User created"
-                    },
-                    "422": {
-                        "description": "Validation error"
+                        "description": "Utilisateur créé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "description": "Objet représentant l'utilisateur créé",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/users/{id}": {
             "get": {
                 "tags": [
-                    "User"
+                    "Utilisateurs"
                 ],
-                "summary": "Get a user by ID",
+                "summary": "Récupère un utilisateur par son ID",
                 "operationId": "36a33ff774d5cba33c039dec2c3e0287",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID de l'utilisateur",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Utilisateur récupéré avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "description": "Objet représentant l'utilisateur",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "Utilisateur non trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
-                    "User"
+                    "Utilisateurs"
                 ],
-                "summary": "Update a user",
+                "summary": "Met à jour un utilisateur existant",
                 "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID de l'utilisateur à mettre à jour",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "requestBody": {
-                    "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "properties": {
+                                    "user": {
+                                        "description": "Objet représentant les nouvelles informations de l'utilisateur",
+                                        "type": "object"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "200": {
-                        "description": "User updated"
+                        "description": "Utilisateur mis à jour avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "description": "Objet représentant l'utilisateur mis à jour",
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
-                    },
-                    "422": {
-                        "description": "Validation error"
+                        "description": "Utilisateur non trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
-                    "User"
+                    "Utilisateurs"
                 ],
-                "summary": "Delete a user",
+                "summary": "Supprime un utilisateur",
                 "operationId": "e169ebcc01eeee2f5e57e5bfc064bc7f",
                 "parameters": [
                     {
                         "name": "id",
                         "in": "path",
+                        "description": "ID de l'utilisateur à supprimer",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int64"
                         }
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "User deleted"
+                    "200": {
+                        "description": "Utilisateur supprimé avec succès",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "description": "Message indiquant que l'utilisateur a été supprimé avec succès",
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "Utilisateur non trouvé"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         }
     },
@@ -2509,7 +2669,7 @@
     "tags": [
         {
             "name": "Authentification",
-            "description": ""
+            "description": "Endpoints pour l'authentification"
         },
         {
             "name": "Book"
@@ -2529,10 +2689,6 @@
         },
         {
             "name": "Status"
-        },
-        {
-            "name": "User",
-            "description": ""
         }
     ]
 }
