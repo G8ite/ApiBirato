@@ -66,6 +66,50 @@ class BookController extends Controller
 
         return new BookResource($book);
     }
+    
+    /**
+     * @OA\Post(
+     *     path="/api/auth/books",
+     *     tags={"Book"},
+     *     summary="Create a new book",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Book")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Book created successfully",
+     *         @OA\JsonContent(ref="#/components/schemas/Book")
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
+     * )
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'title' => 'required|string',
+            'parution_date' => 'nullable|string',
+            'validated' => 'required|boolean',
+            'author_id' => 'required|integer',
+            'book_cover_id' => 'nullable|integer',
+            'paper_type_id' => 'nullable|integer',
+            'format_id' => 'nullable|integer',
+            'isbn_code_id' => 'nullable|integer',
+            'editor_id' => 'nullable|integer',
+            'tags' => 'nullable|array',
+        ]);
+
+        $book = Book::create($request->all());
+
+        if ($request->filled('tags')) {
+            $tags = Tag::whereIn('id', $request->tags)->pluck('id');
+            $book->tags()->sync($tags);
+        }
+
+        return new BookResource($book);
+    }
 
     /**
      * @OA\Put(
@@ -104,12 +148,12 @@ class BookController extends Controller
             'title' => 'nullable|string',
             'parution_date' => 'nullable|string',
             'validated' => 'nullable|boolean',
-            'id_author' => 'nullable|integer',
-            'id_book_cover' => 'nullable|integer',
-            'id_paper_type' => 'nullable|integer',
-            'id_format' => 'nullable|integer',
-            'id_isbn_code' => 'nullable|integer',
-            'id_editor' => 'nullable|integer',
+            'author_id' => 'nullable|integer',
+            'book_cover_id' => 'nullable|integer',
+            'paper_type_id' => 'nullable|integer',
+            'format_id' => 'nullable|integer',
+            'isbn_code_id' => 'nullable|integer',
+            'editor_id' => 'nullable|integer',
 
             'tags' => 'nullable|array',
             'tags.*' => 'integer|exists:tags,id',
@@ -119,12 +163,12 @@ class BookController extends Controller
             'title',
             'parution_date',
             'validated',
-            'id_author',
-            'id_book_cover',
-            'id_paper_type',
-            'id_format',
-            'id_isbn_code',
-            'id_editor',
+            'author_id',
+            'book_cover_id',
+            'paper_type_id',
+            'format_id',
+            'isbn_code_id',
+            'editor_id',
         ]));
 
         $book->save();
@@ -132,50 +176,7 @@ class BookController extends Controller
         return new BookResource($book);
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/books",
-     *     tags={"Book"},
-     *     summary="Create a new book",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Book")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Book created successfully",
-     *         @OA\JsonContent(ref="#/components/schemas/Book")
-     *     ),
-     *     security={
-     *         {"Bearer": {}}
-     *     }
-     * )
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|string',
-            'parution_date' => 'nullable|string',
-            'validated' => 'required|boolean',
-            'id_author' => 'required|integer',
-            'id_book_cover' => 'nullable|integer',
-            'id_paper_type' => 'nullable|integer',
-            'id_format' => 'nullable|integer',
-            'id_isbn_code' => 'nullable|integer',
-            'id_editor' => 'nullable|integer',
-            'tags' => 'nullable|array',
-        ]);
-
-        $book = Book::create($request->all());
-
-        if ($request->filled('tags')) {
-            $tags = Tag::whereIn('id', $request->tags)->pluck('id');
-            $book->tags()->sync($tags);
-        }
-
-        return new BookResource($book);
-    }
-
+    
     /**
      * @OA\Delete(
      *     path="/api/admin-only/books/{book}",

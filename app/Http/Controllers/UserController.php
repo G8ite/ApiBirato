@@ -61,14 +61,14 @@ class UserController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/admin-only/users",
+     *     path="/api/users",
      *     summary="Create a new user",
      *     tags={"User"},
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/User")
      *     ),
-     *     @OA\Response(response="201", description="User created"),
+     *     @OA\Response(response="200", description="User created"),
      *     @OA\Response(response="422", description="Validation error"),
      *     security={
      *         {"Bearer": {}}
@@ -78,16 +78,14 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'firstname'  => 'required|string|max:255',
+            'lastname'  => 'required|string|max:255',
             'email' => 'required|email|unique:users',
             'password' => 'required|min:6',
             'role' => 'required|boolean',
         ]);
 
-        $user = new User();
-        $user->email = $request->input('email');
-        $user->password = Hash::make($request->input('password'));
-        $user->role = $request->input('role');
-        $user->save();
+        $user = User::create($request->all());
 
         return response()->json($user, 201);
     }
@@ -123,6 +121,8 @@ class UserController extends Controller
         }
 
         $request->validate([
+            'lastname'  => 'required|string|max:255',
+            'firstname'  => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $id,
             'password' => 'required|min:6',
             'role' => 'required|boolean',

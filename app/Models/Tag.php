@@ -23,7 +23,7 @@ class Tag extends Model
 
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'book_tag', 'id_tag', 'id_book');
+        return $this->belongsToMany(Book::class, 'book_tag', 'tag_id', 'book_id');
     }
 
 }

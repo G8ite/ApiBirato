@@ -32,36 +32,7 @@ class BookCoverController extends Controller
         return response()->json(['book_covers' => $bookCovers]);
     }
 
-    /**
-     * @OA\Post(
-     *     path="/api/book_covers",
-     *     tags={"Book Covers"},
-     *     summary="Create a new book cover",
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/BookCover")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Successful operation",
-     *         @OA\JsonContent(ref="#/components/schemas/BookCover")
-     *     ),
-     *     security={
-     *         {"Bearer": {}}
-     *     }
-     * )
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'book_cover_name' => 'required|string',
-        ]);
-
-        $bookCover = BookCover::create($request->all());
-
-        return response()->json(['book_cover' => $bookCover], 201);
-    }
-
+    
     /**
      * @OA\Get(
      *     path="/api/book_covers/{book_cover}",
@@ -90,6 +61,36 @@ class BookCoverController extends Controller
     public function show(BookCover $book_cover)
     {
         return response()->json(['book_cover' => $book_cover]);
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/auth/book_covers",
+     *     tags={"Book Covers"},
+     *     summary="Create a new book cover",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/BookCover")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Successful operation",
+     *         @OA\JsonContent(ref="#/components/schemas/BookCover")
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
+     * )
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'book_cover_name' => 'required|string',
+        ]);
+
+        $bookCover = BookCover::create($request->all());
+
+        return response()->json(['book_cover' => $bookCover], 201);
     }
 
     /**

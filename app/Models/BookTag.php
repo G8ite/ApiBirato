@@ -10,8 +10,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
  *     schema="BookTag",
  *     title="BookTag",
  *     @OA\Property(property="id", type="integer", readOnly=true, example=1),
- *     @OA\Property(property="id_book", type="integer", example=1),
- *     @OA\Property(property="id_tag", type="integer", example=1),
+ *     @OA\Property(property="book_id", type="integer", example=1),
+ *     @OA\Property(property="tag_id", type="integer", example=1),
  * )
  */
 class BookTag extends Model
@@ -19,6 +19,6 @@ class BookTag extends Model
     use HasFactory;
 
     protected $table = 'book_tag';
-    protected $fillable = ['id_book', 'id_tag'];
+    protected $fillable = ['book_id', 'tag_id'];
     public $timestamps = false;
 }

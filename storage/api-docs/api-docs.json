@@ -9,13 +9,13 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/auth/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "Authentification de l'utilisateur",
-                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -197,13 +197,15 @@
                         "Bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/auth/authors": {
             "post": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Create a new author",
-                "operationId": "291d8539d3b5490d46fe9f2ebd84c64c",
+                "operationId": "c1d77c928ce79016d97f695babb0984d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -385,40 +387,6 @@
                         "Bearer": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Create a new book",
-                "operationId": "47047e95a700b3271b697e57d0965191",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Book"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Book created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Book"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
             }
         },
         "/api/books/{book}": {
@@ -442,6 +410,42 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/books": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Create a new book",
+                "operationId": "27056c492d0c367bc24917267ddfec3d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Book"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -568,40 +572,6 @@
                         "Bearer": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Book Covers"
-                ],
-                "summary": "Create a new book cover",
-                "operationId": "a65f4fa9055166c919c977eb3cdbc02f",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BookCover"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BookCover"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
             }
         },
         "/api/book_covers/{book_cover}": {
@@ -625,6 +595,42 @@
                 ],
                 "responses": {
                     "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookCover"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/book_covers": {
+            "post": {
+                "tags": [
+                    "Book Covers"
+                ],
+                "summary": "Create a new book cover",
+                "operationId": "2d5a2b4878a19b5fbf66c011b451264a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookCover"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
                         "description": "Successful operation",
                         "content": {
                             "application/json": {
@@ -967,40 +973,6 @@
                         "Bearer": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Editor"
-                ],
-                "summary": "Create a new editor",
-                "operationId": "b84beab9959013d25d5be08e2ec7c175",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Editor"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "Editor created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Editor"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
             }
         },
         "/api/editors/{editor}": {
@@ -1024,6 +996,42 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Editor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/editors": {
+            "post": {
+                "tags": [
+                    "Editor"
+                ],
+                "summary": "Create a new editor",
+                "operationId": "3e72cd990eab7226f0115ca80bcd9ca6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Editor"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Editor created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1147,13 +1155,15 @@
                         "Bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/auth/formats": {
             "post": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Create a new format",
-                "operationId": "96307cd10059da0dce0ac730945f8185",
+                "operationId": "affe91602bf9a9ca1e942a94c5b0529d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1434,40 +1444,6 @@
                         "Bearer": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "Isbn Code"
-                ],
-                "summary": "Create a new ISBN code",
-                "operationId": "1afa10b23b29c6db35a2a32459cb0534",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/IsbnCode"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "ISBN code created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/IsbnCode"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
             }
         },
         "/api/isbn-codes/{isbnCode}": {
@@ -1491,6 +1467,42 @@
                 "responses": {
                     "200": {
                         "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IsbnCode"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/isbn-codes": {
+            "post": {
+                "tags": [
+                    "Isbn Code"
+                ],
+                "summary": "Create a new ISBN code",
+                "operationId": "78ef74c038d48402a158f8fb7c2ef1a7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/IsbnCode"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "ISBN code created successfully",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -1609,13 +1621,15 @@
                         "Bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/auth/paper_types": {
             "post": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Create a new paper type",
-                "operationId": "224cd3182ccd12463609b85b175bd3a5",
+                "operationId": "4c963d442b639e6cc66917d10a0b250a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2028,13 +2042,15 @@
                         "Bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/auth/tags": {
             "post": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Create a new tag",
-                "operationId": "a0a246f29dcb119a2189fd230fc10028",
+                "operationId": "4417e20790d4160859e3a5c2b105485f",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2305,36 +2321,6 @@
                         "Bearer": []
                     }
                 ]
-            },
-            "post": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Create a new user",
-                "operationId": "badc72c36edca171f5691a8b235bb75c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/User"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "201": {
-                        "description": "User created"
-                    },
-                    "422": {
-                        "description": "Validation error"
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
             }
         },
         "/api/admin-only/users/{id}": {
@@ -2441,6 +2427,38 @@
                     }
                 ]
             }
+        },
+        "/api/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
         }
     },
     "components": {
@@ -2476,8 +2494,8 @@
                 "required": [
                     "title",
                     "validated",
-                    "id_author",
-                    "id_editor"
+                    "author_id",
+                    "editor_id"
                 ],
                 "properties": {
                     "id": {
@@ -2493,27 +2511,27 @@
                     "validated": {
                         "type": "boolean"
                     },
-                    "id_author": {
+                    "author_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_book_cover": {
+                    "book_cover_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_paper_type": {
+                    "paper_type_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_format": {
+                    "format_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_isbn_code": {
+                    "isbn_code_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_editor": {
+                    "editor_id": {
                         "type": "integer",
                         "example": 1
                     },
@@ -2558,11 +2576,11 @@
                         "readOnly": true,
                         "example": 1
                     },
-                    "id_book": {
+                    "book_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_tag": {
+                    "tag_id": {
                         "type": "integer",
                         "example": 1
                     }
@@ -2750,40 +2768,37 @@
                     "role"
                 ],
                 "properties": {
-                    "id": {
-                        "description": "ID of the user",
-                        "type": "integer"
-                    },
-                    "name": {
+                    "fistname": {
                         "description": "Name of the user",
-                        "type": "string"
+                        "type": "string",
+                        "example": "Jean"
+                    },
+                    "lastname": {
+                        "description": "Surname of the user",
+                        "type": "string",
+                        "example": "Michem"
                     },
                     "email": {
                         "description": "Email of the user",
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "test@test.test"
                     },
                     "password": {
                         "description": "Password of the user",
                         "type": "string",
-                        "writeOnly": true
+                        "writeOnly": true,
+                        "example": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
                     },
                     "role": {
                         "description": "Role of the user",
-                        "type": "string"
+                        "type": "boolean",
+                        "example": "0"
                     },
                     "remember_token": {
                         "description": "Remember token of the user",
                         "type": "string",
                         "nullable": true
-                    },
-                    "books": {
-                        "description": "Books owned by the user",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Book"
-                        },
-                        "readOnly": true
                     }
                 },
                 "type": "object"

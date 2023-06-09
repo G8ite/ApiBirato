@@ -65,7 +65,7 @@ class EditorController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/editors",
+     *     path="/api/auth/editors",
      *     tags={"Editor"},
      *     summary="Create a new editor",
      *     @OA\RequestBody(
@@ -153,6 +153,8 @@ class EditorController extends Controller
      */
     public function delete(Editor $editor)
     {
+        $editor->books()->update(['editor_id' => null]);
+
         $editor->delete();
 
         return response()->json(['message' => 'Editor deleted successfully']);

@@ -33,7 +33,7 @@ class FormatController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/formats",
+     *     path="/api/auth/formats",
      *     tags={"Formats"},
      *     summary="Create a new format",
      *     @OA\RequestBody(

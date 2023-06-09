@@ -40,7 +40,7 @@ class PaperTypeController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/paper_types",
+     *     path="/api/auth/paper_types",
      *     tags={"Paper Type"},
      *     summary="Create a new paper type",
      *     @OA\RequestBody(

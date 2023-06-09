@@ -14,19 +14,10 @@ use Tymon\JWTAuth\Exceptions\JWTException;
  */
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
 
     /**
      * @OA\Post(
-     *     path="/api/auth/login",
+     *     path="/api/login",
      *     summary="Authentification de l'utilisateur",
      *     tags={"Authentification"},
      *     @OA\RequestBody(

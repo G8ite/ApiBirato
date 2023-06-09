@@ -38,12 +38,12 @@ class BookFactory extends Factory
             'title' => $this->faker->sentence,
             'parution_date' => $this->faker->date,
             'validated' => $this->faker->boolean,
-            'id_author' => $this->faker->randomElement($authorIds),
-            'id_book_cover' => $this->faker->randomElement($bookCoverIds),
-            'id_paper_type' => $this->faker->randomElement($paperTypeIds),
-            'id_format' => $this->faker->randomElement($formatIds),
-            'id_isbn_code' => $this->faker->randomElement($isbnCodeIds),
-            'id_editor' => $this->faker->randomElement($editorIds),
+            'author_id' => $this->faker->randomElement($authorIds),
+            'book_cover_id' => $this->faker->randomElement($bookCoverIds),
+            'paper_type_id' => $this->faker->randomElement($paperTypeIds),
+            'format_id' => $this->faker->randomElement($formatIds),
+            'isbn_code_id' => $this->faker->randomElement($isbnCodeIds),
+            'editor_id' => $this->faker->randomElement($editorIds),
         ];
     }
 }

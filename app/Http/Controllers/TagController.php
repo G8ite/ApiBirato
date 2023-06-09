@@ -33,7 +33,7 @@ class TagController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/tags",
+     *     path="/api/auth/tags",
      *     tags={"Tags"},
      *     summary="Create a new tag",
      *     @OA\RequestBody(

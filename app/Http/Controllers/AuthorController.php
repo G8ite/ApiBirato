@@ -34,7 +34,7 @@ class AuthorController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/authors",
+     *     path="/api/auth/authors",
      *     tags={"Authors"},
      *     summary="Create a new author",
      *     @OA\RequestBody(

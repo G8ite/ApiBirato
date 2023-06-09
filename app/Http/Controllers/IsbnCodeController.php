@@ -65,7 +65,7 @@ class IsbnCodeController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/isbn-codes",
+     *     path="/api/auth/isbn-codes",
      *     tags={"Isbn Code"},
      *     summary="Create a new ISBN code",
      *     @OA\RequestBody(
