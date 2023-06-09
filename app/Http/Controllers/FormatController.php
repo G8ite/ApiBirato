@@ -196,6 +196,8 @@ class FormatController extends Controller
      */
     public function delete(Format $format)
     {
+        $format->books()->update(['format_id' => null]);
+
         $format->delete();
 
         return response()->json(['message' => 'Format deleted successfully']);

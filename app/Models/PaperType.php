@@ -41,4 +41,9 @@ class PaperType extends Model
     protected $fillable = [
         'paper_type_name',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

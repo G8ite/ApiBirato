@@ -188,6 +188,8 @@ class PaperTypeController extends Controller
      */
     public function delete(PaperType $paper_type)
     {
+        $paper_type->books()->update(['paper_type_id' => null]);
+
         $paper_type->delete();
 
         return response()->json(['message' => 'Paper type deleted successfully']);

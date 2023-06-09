@@ -39,4 +39,9 @@ class Format extends Model
     protected $fillable = [
         'format_name',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

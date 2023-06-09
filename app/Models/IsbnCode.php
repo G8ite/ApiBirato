@@ -24,4 +24,9 @@ class IsbnCode extends Model
         'code',
         'validated',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

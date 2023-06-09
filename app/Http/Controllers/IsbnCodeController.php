@@ -161,6 +161,8 @@ class IsbnCodeController extends Controller
      */
     public function delete(IsbnCode $isbnCode)
     {
+        $isbnCode->books()->update(['isbn_code_id' => null]);
+        
         $isbnCode->delete();
 
         return response()->json(['message' => 'ISBN code deleted successfully']);

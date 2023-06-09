@@ -163,6 +163,8 @@ class BookCoverController extends Controller
      */
     public function delete(BookCover $book_cover)
     {
+        $book_cover->books()->update(['book_cover_id' => null]);
+
         $book_cover->delete();
 
         return response()->json(['message' => 'Book cover deleted successfully']);
