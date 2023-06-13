@@ -65,7 +65,7 @@ class BookController extends Controller
      */
     public function show(Book $book)
     {
-        $book = Book::with('bookTags')->findOrFail($book->id);
+        $book = Book::with('bookTags','bookAuthors' )->findOrFail($book->id);
 
         return new BookResource($book);
     }
@@ -95,13 +95,13 @@ class BookController extends Controller
             'title' => 'required|string',
             'parution_date' => 'nullable|string',
             'validated' => 'required|boolean',
-            'author_id' => 'required|integer',
             'book_cover_id' => 'nullable|integer',
             'paper_type_id' => 'nullable|integer',
             'format_id' => 'nullable|integer',
             'isbn_code_id' => 'nullable|integer',
             'editor_id' => 'nullable|integer',
             'tags' => 'nullable|array',
+            'authors' => 'required|array',
         ]);
 
         $book = Book::create($request->all());
@@ -111,8 +111,8 @@ class BookController extends Controller
             $book->bookTags()->sync($tags);
         }
 
-        if ($request->filled('author_id')) {
-            $author = Author::findOrFail($request->author_id);
+        if ($request->filled('authors')) {
+            $author = Author::findOrFail($request->authors);
             $book->bookAuthors()->sync($author);
             $book->save();
         }
@@ -163,7 +163,6 @@ class BookController extends Controller
             'title' => 'nullable|string',
             'parution_date' => 'nullable|string',
             'validated' => 'nullable|boolean',
-            'author_id' => 'nullable|integer',
             'book_cover_id' => 'nullable|integer',
             'paper_type_id' => 'nullable|integer',
             'format_id' => 'nullable|integer',
@@ -172,13 +171,14 @@ class BookController extends Controller
 
             'tags' => 'nullable|array',
             'tags.*' => 'distinct|exists:tags,id',
+            'authors' => 'nullable|array',
+            'authors.*' => 'distinct|exists:authors,id',
         ]);
 
         $book->fill($request->only([
             'title',
             'parution_date',
             'validated',
-            'author_id',
             'book_cover_id',
             'paper_type_id',
             'format_id',
@@ -191,8 +191,8 @@ class BookController extends Controller
             $book->bookTags()->sync($tags);
         }
 
-        if ($request->filled('author_id')) {
-            $author = Author::findOrFail($request->author_id);
+        if ($request->filled('authors')) {
+            $author = Author::findOrFail($request->authors);
             $book->bookAuthors()->sync($author);
             $book->save();
         }

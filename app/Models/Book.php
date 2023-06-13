@@ -13,7 +13,6 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="title", type="string"),
  *     @OA\Property(property="parution_date", type="string"),
  *     @OA\Property(property="validated", type="boolean"),
- *     @OA\Property(property="author_id", type="integer", example=1),
  *     @OA\Property(property="book_cover_id", type="integer", example=1),
  *     @OA\Property(property="paper_type_id", type="integer", example=1),
  *     @OA\Property(property="format_id", type="integer", example=1),

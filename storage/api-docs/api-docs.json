@@ -3024,10 +3024,6 @@
                     "validated": {
                         "type": "boolean"
                     },
-                    "author_id": {
-                        "type": "integer",
-                        "example": 1
-                    },
                     "book_cover_id": {
                         "type": "integer",
                         "example": 1
