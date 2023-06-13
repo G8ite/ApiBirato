@@ -159,7 +159,6 @@ class AuthorController extends Controller
      */
     public function delete(Author $author)
     {
-        $author->books()->update(['author_id' => null]);
         $author->delete();
 
         return response()->json(['message' => 'Author deleted successfully']);

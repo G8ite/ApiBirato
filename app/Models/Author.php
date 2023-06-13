@@ -13,7 +13,8 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="firstname", type="string", example="John"),
  *     @OA\Property(property="lastname", type="string", example="Doe"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
- *     @OA\Property(property="updated_at", type="string", format="date-time")
+ *     @OA\Property(property="updated_at", type="string", format="date-time"),
+ *     @OA\Property(property="books", type="array", @OA\Items(ref="#/components/schemas/Book"))
  * )
  */
 class Author extends Model
@@ -28,5 +29,10 @@ class Author extends Model
     public function books()
     {
         return $this->hasMany(Book::class);
+    }
+
+    public function bookAuthors()
+    {
+        return $this->belongsToMany(Book::class, 'book_author', 'author_id', 'book_id');
     }
 }

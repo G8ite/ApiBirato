@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Editor;
-use App\Models\Tag;
+use App\Models\Author;
 use App\Http\Resources\BookResource;
+use App\Http\Resources\BookWithTagsAndAuthorsResource;
 use Illuminate\Http\Request;
 use OpenApi\Annotations as OA;
 
@@ -14,6 +15,7 @@ use OpenApi\Annotations as OA;
  */
 class BookController extends Controller
 {
+    
     /**
      * @OA\Get(
      *     path="/api/books",
@@ -24,7 +26,7 @@ class BookController extends Controller
      *         description="Successful operation",
      *         @OA\JsonContent(
      *             type="array",
-     *             @OA\Items(ref="#/components/schemas/Book")
+     *             @OA\Items(ref="#/components/schemas/BookWithTagsAndAuthors")
      *         )
      *     ),
      *     security={
@@ -34,9 +36,9 @@ class BookController extends Controller
      */
     public function index()
     {
-        $books = Book::with('tags')->get();
+        $books = Book::with('bookTags', 'bookAuthors')->get();
 
-        return BookResource::collection($books);
+        return BookWithTagsAndAuthorsResource::collection($books);
     }
 
     /**
@@ -107,6 +109,12 @@ class BookController extends Controller
         if ($request->filled('tags')) {
             $tags = $request->tags; 
             $book->bookTags()->sync($tags);
+        }
+
+        if ($request->filled('author_id')) {
+            $author = Author::findOrFail($request->author_id);
+            $book->bookAuthors()->sync($author);
+            $book->save();
         }
 
         if ($request->filled('editor_id')) {
@@ -181,6 +189,12 @@ class BookController extends Controller
         if ($request->filled('tags')) {
             $tags = $request->tags; 
             $book->bookTags()->sync($tags);
+        }
+
+        if ($request->filled('author_id')) {
+            $author = Author::findOrFail($request->author_id);
+            $book->bookAuthors()->sync($author);
+            $book->save();
         }
 
         $book->save();

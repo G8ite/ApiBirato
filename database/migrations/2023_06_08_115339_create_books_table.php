@@ -18,7 +18,6 @@ class CreateBooksTable extends Migration
             $table->string('title');
             $table->string('parution_date')->nullable();
             $table->boolean('validated')->default(false);
-            $table->unsignedBigInteger('author_id')->nullable();
             $table->unsignedBigInteger('book_cover_id')->nullable();
             $table->unsignedBigInteger('paper_type_id')->nullable();
             $table->unsignedBigInteger('format_id')->nullable();
@@ -26,7 +25,6 @@ class CreateBooksTable extends Migration
             $table->unsignedBigInteger('editor_id')->nullable();
             $table->timestamps();
 
-            $table->foreign('author_id')->references('id')->on('authors');
             $table->foreign('book_cover_id')->references('id')->on('book_covers');
             $table->foreign('paper_type_id')->references('id')->on('paper_types');
             $table->foreign('format_id')->references('id')->on('formats');

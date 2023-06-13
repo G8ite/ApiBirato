@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 /**
  * @OA\Schema(
  *     schema="Book",
- *     required={"title", "validated", "author_id", "editor_id"},
+ *     required={"title", "validated", "editor_id"},
  *     @OA\Property(property="id", type="integer", readOnly=true),
  *     @OA\Property(property="title", type="string"),
  *     @OA\Property(property="parution_date", type="string"),
@@ -20,6 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  *     @OA\Property(property="isbn_code_id", type="integer", example=1),
  *     @OA\Property(property="editor_id", type="integer", example=1),
  *     @OA\Property(property="tags", type="array", @OA\Items(type="integer")),
+ *     @OA\Property(property="authors", type="array", @OA\Items(ref="#/components/schemas/Author")),
  * )
  */
 class Book extends Model
@@ -30,19 +31,22 @@ class Book extends Model
         'title',
         'parution_date',
         'validated',
-        'author_id',
+        'editor_id',
         'book_cover_id',
         'paper_type_id',
         'format_id',
-        'isbn_code_id',
-        'editor'
+        'isbn_code_id'
     ];
 
-    public function author()
+    public function authors()
     {
-        return $this->belongsTo(Author::class, 'author_id');
+        return $this->belongsTo(Author::class);
     }
 
+    public function bookAuthors()
+    {
+        return $this->belongsToMany(Author::class, 'book_author', 'book_id', 'author_id');
+    }
 
     public function bookCover()
     {
@@ -54,18 +58,15 @@ class Book extends Model
         return $this->belongsTo(PaperType::class, 'paper_type_id');
     }
 
-
     public function format()
     {
         return $this->belongsTo(Format::class, 'format_id');
     }
 
-
     public function isbn()
     {
         return $this->belongsTo(IsbnCode::class, 'isbn_code_id');
     }
-
 
     public function editor()
     {

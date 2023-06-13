@@ -27,7 +27,6 @@ class BookFactory extends Factory
      */
     public function definition()
     {
-        $authorIds = Author::pluck('id')->toArray();
         $bookCoverIds = BookCover::pluck('id')->toArray();
         $paperTypeIds = PaperType::pluck('id')->toArray();
         $formatIds = Format::pluck('id')->toArray();
@@ -38,7 +37,6 @@ class BookFactory extends Factory
             'title' => $this->faker->sentence,
             'parution_date' => $this->faker->date,
             'validated' => $this->faker->boolean,
-            'author_id' => $this->faker->randomElement($authorIds),
             'book_cover_id' => $this->faker->randomElement($bookCoverIds),
             'paper_type_id' => $this->faker->randomElement($paperTypeIds),
             'format_id' => $this->faker->randomElement($formatIds),

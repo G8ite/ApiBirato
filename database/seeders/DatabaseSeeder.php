@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DatabaseSeeder extends Seeder
 {
@@ -25,5 +25,15 @@ class DatabaseSeeder extends Seeder
         \App\Models\BookTag::factory(10)->create();
         \App\Models\User::factory(10)->create();
         \App\Models\UserBook::factory(10)->create();
+        
+        $booksIDs = \App\Models\Book::pluck('id')->toArray();
+        $authorsIDs = \App\Models\Author::pluck('id')->toArray();
+        foreach ($booksIDs as $bookID) {
+            \App\Models\BookAuthor::factory()->create([
+                'book_id' => $bookID,
+                'author_id' => $authorsIDs[array_rand($authorsIDs)],
+            ]);
+        }
+
     }
 }

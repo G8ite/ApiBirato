@@ -121,6 +121,7 @@ Route::middleware('api')->group(function (){
     // ISBN Codes
     Route::get('/isbn_codes', [IsbnCodeController::class, 'index']);
     Route::get('/isbn_codes/{isbn_code}', [IsbnCodeController::class, 'show']);
+    Route::get('/isbn_codes/search/{isbn_code}', [IsbnCodeController::class, 'search']);
 
     // Books
     Route::get('/books', [BookController::class, 'index']);

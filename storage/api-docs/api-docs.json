@@ -360,6 +360,114 @@
                 ]
             }
         },
+        "/api/book-authors/attach": {
+            "post": {
+                "tags": [
+                    "BookAuthor"
+                ],
+                "summary": "Attach an author to a book",
+                "operationId": "7f1d52c82a8e0848db09d63f0c244fe1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "book_id",
+                                    "author_id"
+                                ],
+                                "properties": {
+                                    "book_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "author_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Author attached to book successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Author attached to book successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book or author not found"
+                    }
+                }
+            }
+        },
+        "/api/book-authors/detach": {
+            "post": {
+                "tags": [
+                    "BookAuthor"
+                ],
+                "summary": "Detach an author from a book",
+                "operationId": "a038b6a733a2d5b0df73a195ac0b5dbb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "book_id",
+                                    "author_id"
+                                ],
+                                "properties": {
+                                    "book_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "author_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Author detached from book successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Author detached from book successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Book or author not found"
+                    }
+                }
+            }
+        },
         "/api/books": {
             "get": {
                 "tags": [
@@ -375,7 +483,7 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Book"
+                                        "$ref": "#/components/schemas/BookWithTagsAndAuthors"
                                     }
                                 }
                             }
@@ -1594,6 +1702,37 @@
                 ]
             }
         },
+        "/api/isbn_codes/search/{isbn_code}": {
+            "get": {
+                "tags": [
+                    "Isbn Code"
+                ],
+                "summary": "Search a book with an ISBN code",
+                "operationId": "107e0bf733ac9933ca89892ce2d7bf99",
+                "parameters": [
+                    {
+                        "name": "isbn_code",
+                        "in": "path",
+                        "description": "ISBN Code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                }
+            }
+        },
         "/api/paper_types": {
             "get": {
                 "tags": [
@@ -2784,6 +2923,54 @@
     },
     "components": {
         "schemas": {
+            "BookWithTagsAndAuthors": {
+                "title": "Book with Tags and Authors",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "parution_date": {
+                        "type": "string"
+                    },
+                    "validated": {
+                        "type": "boolean"
+                    },
+                    "author_id": {
+                        "type": "integer"
+                    },
+                    "book_cover_id": {
+                        "type": "integer"
+                    },
+                    "paper_type_id": {
+                        "type": "integer"
+                    },
+                    "format_id": {
+                        "type": "integer"
+                    },
+                    "isbn_code_id": {
+                        "type": "integer"
+                    },
+                    "editor_id": {
+                        "type": "integer"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tag"
+                        }
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Author"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Author": {
                 "title": "Author",
                 "properties": {
@@ -2807,6 +2994,12 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "books": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Book"
+                        }
                     }
                 },
                 "type": "object"
@@ -2815,7 +3008,6 @@
                 "required": [
                     "title",
                     "validated",
-                    "author_id",
                     "editor_id"
                 ],
                 "properties": {
@@ -2860,6 +3052,12 @@
                         "type": "array",
                         "items": {
                             "type": "integer"
+                        }
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Author"
                         }
                     }
                 },
