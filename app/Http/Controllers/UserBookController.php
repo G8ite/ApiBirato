@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\UserBook;
 use App\Http\Resources\UserBookResource;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class UserBookController extends Controller
 {
@@ -74,7 +74,7 @@ class UserBookController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/user_books",
+     *     path="/api/auth/user_books",
      *     tags={"UserBook"},
      *     summary="Create a new user book",
      *     @OA\RequestBody(
@@ -129,12 +129,13 @@ class UserBookController extends Controller
         }
 
         $userBook = UserBook::create($request->all());
+
         return new UserBookResource($userBook);
     }
 
     /**
      * @OA\Put(
-     *     path="/api/user_books/{user_book}",
+     *     path="/api/auth/user_books/{user_book}",
      *     tags={"UserBook"},
      *     summary="Update a user book",
      *     @OA\Parameter(
@@ -188,6 +189,12 @@ class UserBookController extends Controller
      */
     public function update(Request $request, UserBook $userBook)
     {
+        $authenticatedUser = JWTAuth::parseToken()->authenticate();
+
+        if ($authenticatedUser && $userBook->user_id != $authenticatedUser->id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+        
         $validator = Validator::make($request->all(), [
             'user_id' => 'sometimes|required|exists:users,id',
             'book_id' => 'sometimes|required|exists:books,id',
@@ -212,7 +219,7 @@ class UserBookController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/user_books/{user_book}",
+     *     path="/api/auth/user_books/{user_book}",
      *     tags={"UserBook"}, 
      *     summary="Delete a user book",
      *     @OA\Parameter(
@@ -241,8 +248,15 @@ class UserBookController extends Controller
      */
     public function delete(UserBook $userBook)
     {
+
+        $authenticatedUser = JWTAuth::parseToken()->authenticate();
+
+        if ($authenticatedUser && $userBook->user_id != $authenticatedUser->id) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
+
         $userBook->delete();
 
-        return response()->noContent();
+        return response()->json("User Book deleted successfully");
     }
 }

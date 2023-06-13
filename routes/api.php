@@ -121,7 +121,7 @@ Route::middleware('api')->group(function (){
     // ISBN Codes
     Route::get('/isbn_codes', [IsbnCodeController::class, 'index']);
     Route::get('/isbn_codes/{isbn_code}', [IsbnCodeController::class, 'show']);
-    Route::get('/isbn_codes/search/{isbn_code}', [IsbnCodeController::class, 'search']);
+
 
     // Books
     Route::get('/books', [BookController::class, 'index']);
@@ -133,11 +133,6 @@ Route::middleware('api')->group(function (){
     // User Books
     Route::get('/user_books', [UserBookController::class, 'index']);
     Route::get('/user_books/{user_book}', [UserBookController::class, 'show']);
-    Route::post('/user_books', [UserBookController::class, 'store']);
-    Route::put('/user_books/{user_book}', [UserBookController::class, 'update']);
-    Route::delete('/user_books/{user_book}', [UserBookController::class, 'delete']);
-
-
 });
 
 Route::group([
@@ -176,4 +171,12 @@ Route::group([
 
     // Users
     Route::put('/users/{user}', [UserController::class, 'update']);
+
+    //  Isbn Codes
+    Route::get('/isbn_codes/search/{isbn_code}', [IsbnCodeController::class, 'search']);
+
+    // User Books
+    Route::post('/user_books', [UserBookController::class, 'store']);
+    Route::put('/user_books/{user_book}', [UserBookController::class, 'update']);
+    Route::delete('/user_books/{user_book}', [UserBookController::class, 'delete']);
 });

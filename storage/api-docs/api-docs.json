@@ -360,114 +360,6 @@
                 ]
             }
         },
-        "/api/book-authors/attach": {
-            "post": {
-                "tags": [
-                    "BookAuthor"
-                ],
-                "summary": "Attach an author to a book",
-                "operationId": "7f1d52c82a8e0848db09d63f0c244fe1",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "book_id",
-                                    "author_id"
-                                ],
-                                "properties": {
-                                    "book_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "author_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Author attached to book successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Author attached to book successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Book or author not found"
-                    }
-                }
-            }
-        },
-        "/api/book-authors/detach": {
-            "post": {
-                "tags": [
-                    "BookAuthor"
-                ],
-                "summary": "Detach an author from a book",
-                "operationId": "a038b6a733a2d5b0df73a195ac0b5dbb",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "book_id",
-                                    "author_id"
-                                ],
-                                "properties": {
-                                    "book_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    },
-                                    "author_id": {
-                                        "type": "integer",
-                                        "example": 1
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Author detached from book successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "Author detached from book successfully"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "Book or author not found"
-                    }
-                }
-            }
-        },
         "/api/books": {
             "get": {
                 "tags": [
@@ -1702,13 +1594,13 @@
                 ]
             }
         },
-        "/api/isbn_codes/search/{isbn_code}": {
+        "/api/auth/isbn_codes/search/{isbn_code}": {
             "get": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Search a book with an ISBN code",
-                "operationId": "107e0bf733ac9933ca89892ce2d7bf99",
+                "operationId": "b423e21257db1bcf058eb40b8e4a565f",
                 "parameters": [
                     {
                         "name": "isbn_code",
@@ -1730,7 +1622,12 @@
                     "404": {
                         "description": "Book not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/paper_types": {
@@ -2475,13 +2372,73 @@
                         "Bearer": []
                     }
                 ]
-            },
+            }
+        },
+        "/api/user_books/{user_book}": {
+            "get": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Get a user book by ID",
+                "operationId": "31676bd51191501016fdd7df97f998a6",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_book": {
+                                            "$ref": "#/components/schemas/UserBook"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/user_books": {
             "post": {
                 "tags": [
                     "UserBook"
                 ],
                 "summary": "Create a new user book",
-                "operationId": "cb5cd008d7820bae0fa8a6d22b36cc9c",
+                "operationId": "c1d28a204f380ff574282c465ad04d78",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -2561,69 +2518,13 @@
                 ]
             }
         },
-        "/api/user_books/{user_book}": {
-            "get": {
-                "tags": [
-                    "UserBook"
-                ],
-                "summary": "Get a user book by ID",
-                "operationId": "31676bd51191501016fdd7df97f998a6",
-                "parameters": [
-                    {
-                        "name": "user_book",
-                        "in": "path",
-                        "description": "User Book ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer",
-                            "format": "int64"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "user_book": {
-                                            "$ref": "#/components/schemas/UserBook"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "404": {
-                        "description": "User Book not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "Bearer": []
-                    }
-                ]
-            },
+        "/api/auth/user_books/{user_book}": {
             "put": {
                 "tags": [
                     "UserBook"
                 ],
                 "summary": "Update a user book",
-                "operationId": "a5dbce3980ab063684dd0eac8ec5bc28",
+                "operationId": "5314ebe6cbe09ecf85c706d66239e403",
                 "parameters": [
                     {
                         "name": "user_book",
@@ -2734,7 +2635,7 @@
                     "UserBook"
                 ],
                 "summary": "Delete a user book",
-                "operationId": "325e445c5e7dda32691cb1c1bc433079",
+                "operationId": "1946004524cfb97793b3deae3f82039f",
                 "parameters": [
                     {
                         "name": "user_book",

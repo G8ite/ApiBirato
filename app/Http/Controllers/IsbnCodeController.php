@@ -177,7 +177,7 @@ class IsbnCodeController extends Controller
 
    /**
      * @OA\Get(
-     *     path="/api/isbn_codes/search/{isbn_code}",
+     *     path="/api/auth/isbn_codes/search/{isbn_code}",
      *     tags={"Isbn Code"},
      *     summary="Search a book with an ISBN code",
      *     @OA\Parameter(
@@ -195,7 +195,10 @@ class IsbnCodeController extends Controller
      *     @OA\Response(
      *         response=404,
      *         description="Book not found"
-     *     )
+     *     ),
+     *    security={
+     *        {"Bearer": {}}
+     *   }
      * )
      */
     public function search(string $isbnCode)
