@@ -7,8 +7,11 @@ use App\Http\Resources\IsbnCodeResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use App\Http\Resources\BookResource;
+use App\Http\Resources\BookWithTagsAndAuthorsResource;
 use App\Models\Book;
-use GuzzleHttp\Promise\Is;
+use App\Models\Author;
+use App\Models\BookAuthor;
+use App\Models\Editor;
 
 /**
  * @OA\Tag(name="Isbn Code")
@@ -201,7 +204,18 @@ class IsbnCodeController extends Controller
         $isbnCodeTest = IsbnCode::where('code', $isbnCode)->first();
 
         if ($isbnCodeTest) {
-            return new BookResource($isbnCodeTest->book);
+            $book = Book::where('isbn_code_id', $isbnCodeTest->id)->first();
+            
+
+            if ($book) {
+                $book->load('tags', 'authors');
+                $book->save();
+                
+                return response()->json([
+                    'message' => 'Book found',
+                    'book' => new BookResource($book)
+                ]);
+            }
         }
 
 
@@ -214,37 +228,56 @@ class IsbnCodeController extends Controller
         // récupération des données
         $title = $json['items'][0]['volumeInfo']['title'];
         $authors = $json['items'][0]['volumeInfo']['authors'];
-        // pour chaque auteur, on vérifie s'il existe en base de données
-        // foreach ($authors as $author) {
-        //     // division de la chaîne de caractères en tableau
-        //     $author = explode(' ', $author);
-
-        //     $authorFirstNameTest = Author::where('firstname', $author[0])->first();
-        //     $authorLastNameTest = Author::where('lastname', $author[1])->first();
-        //     // si l'auteur n'existe pas, on le crée
-        //     if (!$authorFirstNameTest && !$authorLastNameTest) {
-        //         $authorTest = Author::create(['name' => $author]);
-        //     }
-        //     // on récupère l'id de l'auteur
-        //     $authorId = $authorTest->id;
-        //     // on crée une entrée dans la table pivot
-        //     $authorBook = AuthorBook::create(['author_id' => $authorId]);
-        // }
         $publishedDate = $json['items'][0]['volumeInfo']['publishedDate'];
         $validated = false;
         $publisher = $json['items'][0]['volumeInfo']['publisher'];
+        $count = 0;
+        
+        foreach ($authors as $author) {
+            
+            $author = explode(' ', $author);
 
-        // on crée le livre
+            
+            $authorTest = Author::where('firstname', $author[0])->where('lastname', $author[1])->first();
+
+            if (!$authorTest) {
+                $authorTest = Author::create([
+                    'firstname' => $author[0],
+                    'lastname' => $author[1]
+                ]);
+
+                $authors[$count] = $authorTest;
+            }
+
+            $authors[$count] = $authorTest;
+
+            $count++;
+        }
+
+        $editorTest = Editor::where('editor_name', $publisher)->first();
+
+        if (!$editorTest) {
+            $editorTest = Editor::create([
+                'editor_name' => $publisher,
+            ]);
+        }
+
         $book = Book::create([
             'title' => $title,
             'validated' => $validated,
-            'author_id' => 1,
             'parution_date' => $publishedDate,
             'validated' => $validated,
-            'editor_id' => 1,
+            'editor_id' => $editorTest->id ?? null,
+            'authors' => $authors,
         ]);
 
-        // on crée le code ISBN
+        foreach ($authors as $author) {
+            BookAuthor::create([
+                'book_id' => $book->id,
+                'author_id' => $author->id,
+            ]);
+        }
+        
         $isbnCode = IsbnCode::create([
             'code' => $isbnCode,
             'validated' => $validated,
@@ -254,6 +287,9 @@ class IsbnCodeController extends Controller
         $book->isbn_code_id = $isbnCode->id;
         $book->save();
 
-        return new BookResource($book);       
+        return response()->json([
+            'message' => 'Book created',
+            'book' => new BookResource($book)
+        ]);     
     }
 }
