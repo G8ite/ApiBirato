@@ -39,4 +39,9 @@ class BookCover extends Model
     protected $fillable = [
         'book_cover_name',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
 }

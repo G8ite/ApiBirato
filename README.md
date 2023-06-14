@@ -1,66 +1,151 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# <p align="center" style="color:MediumOrchid;">AbiratoBook</p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Cette API est une partie d'un projet qui deviendra ensuite le site de référence dans la gestion et la vente de livres anciens.
+<br><br>
+Enfin, à mon échelle hein.
+<br><br>
+***
 
-## About Laravel
+## <p align="center" style="color:LightSteelBlue;">Particularités</p>
+***
+<br><br>
+Dans les fonctions d'IsbnCode, la fonction "search" fait appel à l'api Google Books.
+<br><br>
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+Elle va recherché si l'ISBN rentré par l'utilisateur n'existe pas déjà en base de données.
+<br><br>
+Ensuite, s'il n'exite pas, elle fait appel à l'api Google pour récupérer le nom de l'auteur, la date de parution, l'éditeur et le ou les auteurs.
+<br><br>
+Elle crée ensuite un nouveau livre, enregistre l'ISBN qui lui est lié, lie ou ajoute l'éditeur et le ou les auteurs.
+<br><br>
+Enfin, elle retourne le livre trouvé ou le livre créé en base de données.
+<br><br>
+***
+## <p align="center" style="color:LightSteelBlue;">Prérequis</p>
+***
+<br><br>
+Assurez-vous d'avoir installé les éléments suivants avant de commencer :
+<br><br>
+- PHP >= 7.4
+- Composer
+- Laravel CLI
+- MySQL / MariaDB
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+<br>
+Vérifiez votre version de Laravel en exécutant la commande suivante :
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+<br>
 
-## Learning Laravel
+```shell
+php artisan --version
+```
+<br>
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+***
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## <p align="center" style="color:LightSteelBlue;">Installation</p>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+***
 
-## Laravel Sponsors
+<br>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+Clonez ce dépôt dans le répertoire de votre choix :
+<br><br>
 
-### Premium Partners
+```shell
+git clone https://github.com/G8ite/ApiBirato.git
+```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+<br>
 
-## Contributing
+### Configurez votre environnement en créant le fichier .env à partir du modèle .env.example. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+<br>
+Remplacez les valeurs entre crochets par les informations appropriées :
 
-## Code of Conduct
+<br>
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+```shell
+cp .env.example .env
+```
 
-## Security Vulnerabilities
+<br>
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Créez une base de données dans phpMyAdmin avec le nom "abirato_lrv" et l'encodage "utf8mb3_general_ci".
 
-## License
+### Initialiser tymon/jwt-auth
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+<br>
+
+```shell
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+```
+
+<br>
+
+```shell
+php artisan jwt:secret
+```
+
+Vérifiez que JWT_SECRET a été ajouté à votre .env, sinon ajoutez le.
+
+<br>
+
+### Installez les dépendances du projet avec Composer :
+<br>
+
+```shell
+composer install
+```
+
+<br>
+
+### Exécutez les migrations pour créer les tables de la base de données :
+<br>
+
+```shell
+php artisan migrate
+```
+<br>
+
+### Exécutez les seeders pour peupler la base de données avec des données de test :
+<br>
+
+```shell
+php artisan db:seed
+```
+<br>
+
+### Générez la documentation de l'API en utilisant L5 Swagger :
+<br>
+
+```shell
+php artisan l5-swagger:generate
+```
+<br>
+
+***
+
+## <p align="center" style="color:LightSteelBlue;">Utilisation</p>
+***
+<br>
+
+### Démarrez le serveur de développement Laravel :
+<br>
+
+```shell
+php artisan serve
+```
+<br>
+
+### Accédez à l'adresse suivante dans votre navigateur :
+<br>
+
+```bash
+http://127.0.0.1:8000/api/documentation#/
+```
+<br>
+
+Vous devriez maintenant voir la documentation de l'API et pouvoir commencer à interagir avec votre application.
+
+

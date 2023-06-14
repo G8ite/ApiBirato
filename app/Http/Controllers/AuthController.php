@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Controller;
 use Tymon\JWTAuth\Facades\JWTAuth;
-use OpenApi\Annotations as OA;
+use Tymon\JWTAuth\Exceptions\JWTException;
+
 /**
  * @OA\Tag(
  *     name="Authentification",
@@ -14,19 +14,10 @@ use OpenApi\Annotations as OA;
  */
 class AuthController extends Controller
 {
-    /**
-     * Create a new AuthController instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth:api', ['except' => ['login']]);
-    }
 
     /**
      * @OA\Post(
-     *     path="/api/auth/login",
+     *     path="/api/login",
      *     summary="Authentification de l'utilisateur",
      *     tags={"Authentification"},
      *     @OA\RequestBody(
@@ -74,111 +65,127 @@ class AuthController extends Controller
      * )
      */
     public function login()
-    {
-    $credentials = request(['email', 'password']);
+    {   
+        // TODO: Mettre à jour le token de l'utilisateur
+        //       Stocker le token dans le storage de l'application
+        $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Identifiants invalides'], 401);
+        if (! $token = JWTAuth::attempt($credentials)) {
+            return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
     }
 
     /**
-     * Renvoie les informations sur l'utilisateur authentifié.
-     *
      * @OA\Get(
-     *     path="/api/me",
-     *     operationId="me",
+     *     path="/api/auth/me",
+     *     summary="Récupère l'utilisateur authentifié",
      *     tags={"Authentification"},
-     *     summary="Récupère les informations de l'utilisateur authentifié",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Informations de l'utilisateur",
+     *         description="Utilisateur authentifié récupéré avec succès",
      *         @OA\JsonContent(
      *             type="object",
-     *             @OA\Property(property="name", type="string"),
-     *             @OA\Property(property="email", type="string")
+     *             description="Objet représentant l'utilisateur authentifié"
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function me()
     {
-        return response()->json(Auth::user());
+        $user = JWTAuth::parseToken()->authenticate();
+
+        return response()->json($user);
     }
 
     /**
-     * Déconnecte l'utilisateur (révoque le token JWT).
-     *
      * @OA\Post(
-     *     path="/api/logout",
-     *     operationId="logout",
+     *     path="/api/auth/logout",
+     *     summary="Déconnecte l'utilisateur (invalide le jeton)",
      *     tags={"Authentification"},
-     *     summary="Déconnexion de l'utilisateur",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
      *         description="Déconnexion réussie",
      *         @OA\JsonContent(
-     *             @OA\Property(property="message", type="string")
+     *             @OA\Property(
+     *                 property="message",
+     *                 type="string",
+     *                 description="Message indiquant que la déconnexion s'est déroulée avec succès"
+     *             )
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function logout()
     {
         auth()->logout();
 
-        return response()->json(['message' => 'Déconnexion réussie']);
+        return response()->json(['message' => 'Successfully logged out']);
     }
 
     /**
-     * Rafraîchit le token JWT de l'utilisateur.
-     *
      * @OA\Post(
-     *     path="/api/refresh",
-     *     operationId="refresh",
+     *     path="/api/auth/refresh",
+     *     summary="Actualise le jeton",
      *     tags={"Authentification"},
-     *     summary="Rafraîchit le token JWT de l'utilisateur",
-     *     security={{"bearerAuth":{}}},
      *     @OA\Response(
      *         response=200,
-     *         description="Nouveau token JWT",
+     *         description="Jeton actualisé avec succès",
      *         @OA\JsonContent(
-     *             @OA\Property(property="access_token", type="string"),
-     *             @OA\Property(property="token_type", type="string", example="bearer"),
-     *             @OA\Property(property="expires_in", type="integer", example="3600")
+     *             @OA\Property(
+     *                 property="access_token",
+     *                 type="string",
+     *                 description="Nouveau jeton d'accès"
+     *             ),
+     *             @OA\Property(
+     *                 property="token_type",
+     *                 type="string",
+     *                 description="Type de jeton (Bearer)"
+     *             ),
+     *             @OA\Property(
+     *                 property="expires_in",
+     *                 type="integer",
+     *                 description="Durée de validité du nouveau jeton en secondes"
+     *             )
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
-     *
-     * @return \Illuminate\Http\JsonResponse
      */
     public function refresh()
     {
-        $token = Auth::refresh();
+        try {
+            $newToken = auth()->refresh();
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'Unauthorized'], 401);
+        }
 
-        return $this->respondWithToken($token);
+        return $this->respondWithToken($newToken);
     }
 
     /**
-     * Renvoie la réponse avec le token JWT.
+     * Get the token array structure.
      *
-     * @param  string  $token
+     * @param  string $token
+     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function respondWithToken($token)
     {
+        $expiration = JWTAuth::factory()->getTTL() * 60;
+
         return response()->json([
             'access_token' => $token,
             'token_type' => 'bearer',
-            'expires_in' => JWTAuth::factory()->getTTL() * 60,
+            'expires_in' => $expiration
         ]);
     }
 }

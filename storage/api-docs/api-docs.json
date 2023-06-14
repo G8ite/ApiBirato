@@ -9,13 +9,13 @@
         "version": "1.0.0"
     },
     "paths": {
-        "/api/auth/login": {
+        "/api/login": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
                 "summary": "Authentification de l'utilisateur",
-                "operationId": "8dcb70df1020986038d098cc08d05dae",
+                "operationId": "a3b306d14572d1f4bd6c064b3233e7b8",
                 "requestBody": {
                     "content": {
                         "application/json": {
@@ -66,28 +66,20 @@
                 }
             }
         },
-        "/api/me": {
+        "/api/auth/me": {
             "get": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Récupère les informations de l'utilisateur authentifié",
-                "description": "Renvoie les informations sur l'utilisateur authentifié.",
-                "operationId": "me",
+                "summary": "Récupère l'utilisateur authentifié",
+                "operationId": "b9abb1a7a74670a19c215c2c133f14d8",
                 "responses": {
                     "200": {
-                        "description": "Informations de l'utilisateur",
+                        "description": "Utilisateur authentifié récupéré avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "name": {
-                                            "type": "string"
-                                        },
-                                        "email": {
-                                            "type": "string"
-                                        }
-                                    },
+                                    "description": "Objet représentant l'utilisateur authentifié",
                                     "type": "object"
                                 }
                             }
@@ -96,19 +88,18 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
         },
-        "/api/logout": {
+        "/api/auth/logout": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Déconnexion de l'utilisateur",
-                "description": "Déconnecte l'utilisateur (révoque le token JWT).",
-                "operationId": "logout",
+                "summary": "Déconnecte l'utilisateur (invalide le jeton)",
+                "operationId": "69281b12abb272c76871f19cb17ca563",
                 "responses": {
                     "200": {
                         "description": "Déconnexion réussie",
@@ -117,6 +108,7 @@
                                 "schema": {
                                     "properties": {
                                         "message": {
+                                            "description": "Message indiquant que la déconnexion s'est déroulée avec succès",
                                             "type": "string"
                                         }
                                     },
@@ -128,36 +120,36 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
         },
-        "/api/refresh": {
+        "/api/auth/refresh": {
             "post": {
                 "tags": [
                     "Authentification"
                 ],
-                "summary": "Rafraîchit le token JWT de l'utilisateur",
-                "description": "Rafraîchit le token JWT de l'utilisateur.",
-                "operationId": "refresh",
+                "summary": "Actualise le jeton",
+                "operationId": "b2eae7a8032954d25b46c7ec6f489c68",
                 "responses": {
                     "200": {
-                        "description": "Nouveau token JWT",
+                        "description": "Jeton actualisé avec succès",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "access_token": {
+                                            "description": "Nouveau jeton d'accès",
                                             "type": "string"
                                         },
                                         "token_type": {
-                                            "type": "string",
-                                            "example": "bearer"
+                                            "description": "Type de jeton (Bearer)",
+                                            "type": "string"
                                         },
                                         "expires_in": {
-                                            "type": "integer",
-                                            "example": "3600"
+                                            "description": "Durée de validité du nouveau jeton en secondes",
+                                            "type": "integer"
                                         }
                                     },
                                     "type": "object"
@@ -168,7 +160,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "Bearer": []
                     }
                 ]
             }
@@ -199,14 +191,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/authors": {
             "post": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Create a new author",
-                "operationId": "291d8539d3b5490d46fe9f2ebd84c64c",
+                "operationId": "c1d77c928ce79016d97f695babb0984d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -228,7 +227,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/authors/{author}": {
@@ -260,14 +264,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/authors/{author}": {
             "put": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Update an existing author",
-                "operationId": "e97e8e808653ecf94e366ee06d549862",
+                "operationId": "1ff15a360e0bc0a7bd4d226bfa9f128a",
                 "parameters": [
                     {
                         "name": "author",
@@ -300,14 +311,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Authors"
                 ],
                 "summary": "Delete an author",
-                "operationId": "b3dc1987c960be1ed4226a9c9a5e4315",
+                "operationId": "9594266beff843e42ebed85a8228c0db",
                 "parameters": [
                     {
                         "name": "author",
@@ -336,7 +352,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/books": {
@@ -354,42 +375,18 @@
                                 "schema": {
                                     "type": "array",
                                     "items": {
-                                        "$ref": "#/components/schemas/Book"
+                                        "$ref": "#/components/schemas/BookWithTagsAndAuthors"
                                     }
                                 }
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Book"
-                ],
-                "summary": "Create a new book",
-                "operationId": "47047e95a700b3271b697e57d0965191",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Book"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Book created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Book"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/books/{book}": {
@@ -421,14 +418,57 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/books": {
+            "post": {
+                "tags": [
+                    "Book"
+                ],
+                "summary": "Create a new book",
+                "operationId": "27056c492d0c367bc24917267ddfec3d",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Book"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Book created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Book"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/books/{book}": {
             "put": {
                 "tags": [
                     "Book"
                 ],
                 "summary": "Update a book",
-                "operationId": "cf6535a3185059974fb8baaf90b29eaf",
+                "operationId": "2dec9cb24e6fa22b4a5091c57b6ee5de",
                 "parameters": [
                     {
                         "name": "book",
@@ -469,14 +509,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Book"
                 ],
                 "summary": "Delete a book",
-                "operationId": "8b4fa9f9c334696e9dad8aa920bd5a74",
+                "operationId": "6e04007f7d27d0805a8a3a5808c4edae",
                 "parameters": [
                     {
                         "name": "book",
@@ -492,7 +537,12 @@
                     "200": {
                         "description": "Book deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/book_covers": {
@@ -516,36 +566,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Book Covers"
-                ],
-                "summary": "Create a new book cover",
-                "operationId": "a65f4fa9055166c919c977eb3cdbc02f",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/BookCover"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/BookCover"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/book_covers/{book_cover}": {
@@ -578,14 +604,57 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/book_covers": {
+            "post": {
+                "tags": [
+                    "Book Covers"
+                ],
+                "summary": "Create a new book cover",
+                "operationId": "2d5a2b4878a19b5fbf66c011b451264a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/BookCover"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/BookCover"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/book_covers/{book_cover}": {
             "put": {
                 "tags": [
                     "Book Covers"
                 ],
                 "summary": "Update a book cover",
-                "operationId": "e5e84a095b9515c38c93b0cce2a35d97",
+                "operationId": "1325695226a4765b5a275633f2fced96",
                 "parameters": [
                     {
                         "name": "book_cover",
@@ -619,14 +688,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Book Covers"
                 ],
                 "summary": "Delete a book cover",
-                "operationId": "bea3a2028a3d80dab6e37bb03d45cdc2",
+                "operationId": "a80cac35c460ba04e3ed15c813649ef8",
                 "parameters": [
                     {
                         "name": "book_cover",
@@ -656,7 +730,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/conservation_states": {
@@ -680,44 +759,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Conservation State"
-                ],
-                "summary": "Create a new conservation state",
-                "operationId": "c2636e863667ddadf1fc0cc139a4e06c",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "state_name"
-                                ],
-                                "properties": {
-                                    "state_name": {
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/ConservationState"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/conservation_states/{conservation_state}": {
@@ -754,14 +801,65 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/conservation_states": {
+            "post": {
+                "tags": [
+                    "Conservation State"
+                ],
+                "summary": "Create a new conservation state",
+                "operationId": "23bde3b8310a4e83e336e011a93a6011",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "state_name"
+                                ],
+                                "properties": {
+                                    "state_name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ConservationState"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/conservation_states/{conservation_state}": {
             "put": {
                 "tags": [
                     "Conservation State"
                 ],
                 "summary": "Update a conservation state",
-                "operationId": "18139734c3a54a73483f095584139a1a",
+                "operationId": "31bf7e706d447a4ff795328e9632c999",
                 "parameters": [
                     {
                         "name": "conservation_state",
@@ -807,14 +905,19 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Conservation State"
                 ],
                 "summary": "Delete a conservation state",
-                "operationId": "a906ec3ab8a9d987b0b70f84253a45a3",
+                "operationId": "58ba437168db5517d7df62d79ba656a9",
                 "parameters": [
                     {
                         "name": "conservation_state",
@@ -835,7 +938,12 @@
                     "404": {
                         "description": "Conservation state not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/editors": {
@@ -859,36 +967,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Editor"
-                ],
-                "summary": "Create a new editor",
-                "operationId": "b84beab9959013d25d5be08e2ec7c175",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Editor"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "Editor created successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Editor"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/editors/{editor}": {
@@ -920,14 +1004,57 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/editors": {
+            "post": {
+                "tags": [
+                    "Editor"
+                ],
+                "summary": "Create a new editor",
+                "operationId": "3e72cd990eab7226f0115ca80bcd9ca6",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Editor"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Editor created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Editor"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/editors/{editor}": {
             "put": {
                 "tags": [
                     "Editor"
                 ],
                 "summary": "Update an existing editor",
-                "operationId": "27b18bd1295cc6d3f42e400a6646a941",
+                "operationId": "4774470aad545c708c61d13c356841d1",
                 "parameters": [
                     {
                         "name": "editor",
@@ -960,14 +1087,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Editor"
                 ],
                 "summary": "Delete an existing editor",
-                "operationId": "12abb2a2babb419c9398d1fc8150e0d2",
+                "operationId": "83b3f5a9ee34f3637b0417e3f4d51733",
                 "parameters": [
                     {
                         "name": "editor",
@@ -983,7 +1115,12 @@
                     "200": {
                         "description": "Editor deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/formats": {
@@ -1012,14 +1149,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/formats": {
             "post": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Create a new format",
-                "operationId": "96307cd10059da0dce0ac730945f8185",
+                "operationId": "affe91602bf9a9ca1e942a94c5b0529d",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1066,7 +1210,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/formats/{format}": {
@@ -1118,14 +1267,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/formats/{format}": {
             "put": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Update a format",
-                "operationId": "cae191e8e786875c54e516fd03a20374",
+                "operationId": "d0343a3e619265c6e28ceba53239a9e6",
                 "parameters": [
                     {
                         "name": "format",
@@ -1198,14 +1354,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Formats"
                 ],
                 "summary": "Delete a format",
-                "operationId": "24fec60fa6e29708620fbb1093f4185b",
+                "operationId": "c863a2fa04dedace83ec5fe37ccf5514",
                 "parameters": [
                     {
                         "name": "format",
@@ -1248,16 +1409,21 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
-        "/api/isbn-codes": {
+        "/api/isbn_codes": {
             "get": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Get all ISBN codes",
-                "operationId": "9219b162bd56d4f761b918dc2c237160",
+                "operationId": "f2d33fc7e48343200980694b371840ad",
                 "responses": {
                     "200": {
                         "description": "Successful operation",
@@ -1272,14 +1438,58 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/isbn_codes/{isbn_code}": {
+            "get": {
+                "tags": [
+                    "Isbn Code"
+                ],
+                "summary": "Get a specific ISBN code",
+                "operationId": "e12c3cfb1df04675e959b800337e6911",
+                "parameters": [
+                    {
+                        "name": "isbn_code",
+                        "in": "path",
+                        "description": "ISBN Code ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/IsbnCode"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/isbn_codes": {
             "post": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Create a new ISBN code",
-                "operationId": "1afa10b23b29c6db35a2a32459cb0534",
+                "operationId": "2ac78bad4080e235a3e8db8cfe3bf179",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1301,49 +1511,24 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
-        "/api/isbn-codes/{isbnCode}": {
-            "get": {
-                "tags": [
-                    "Isbn Code"
-                ],
-                "summary": "Get a specific ISBN code",
-                "operationId": "b82aaf858a6b8a82a3236c597ac41b41",
-                "parameters": [
-                    {
-                        "name": "isbnCode",
-                        "in": "path",
-                        "description": "ISBN Code ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Successful operation",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/IsbnCode"
-                                }
-                            }
-                        }
-                    }
-                }
-            },
+        "/api/admin-only/isbn_codes/{isbn_code}": {
             "put": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Update an existing ISBN code",
-                "operationId": "5e0cf349ea25d23016743f825fdcc662",
+                "operationId": "3f362033f6b7d03b8b69380a6988855f",
                 "parameters": [
                     {
-                        "name": "isbnCode",
+                        "name": "isbn_code",
                         "in": "path",
                         "description": "ISBN Code ID",
                         "required": true,
@@ -1373,17 +1558,22 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Isbn Code"
                 ],
                 "summary": "Delete an existing ISBN code",
-                "operationId": "8e96abc6719f90acb573dbbe767693bf",
+                "operationId": "8b2b413d3a9b9364352723640787d8f7",
                 "parameters": [
                     {
-                        "name": "isbnCode",
+                        "name": "isbn_code",
                         "in": "path",
                         "description": "ISBN Code ID",
                         "required": true,
@@ -1396,7 +1586,48 @@
                     "200": {
                         "description": "ISBN code deleted successfully"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/isbn_codes/search/{isbn_code}": {
+            "get": {
+                "tags": [
+                    "Isbn Code"
+                ],
+                "summary": "Search a book with an ISBN code",
+                "operationId": "b423e21257db1bcf058eb40b8e4a565f",
+                "parameters": [
+                    {
+                        "name": "isbn_code",
+                        "in": "path",
+                        "description": "ISBN Code",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Book found",
+                        "content": {
+                            "application/json": {}
+                        }
+                    },
+                    "404": {
+                        "description": "Book not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/paper_types": {
@@ -1420,14 +1651,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/paper_types": {
             "post": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Create a new paper type",
-                "operationId": "224cd3182ccd12463609b85b175bd3a5",
+                "operationId": "4c963d442b639e6cc66917d10a0b250a",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1457,7 +1695,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/paper_types/{paper_type}": {
@@ -1494,14 +1737,21 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/paper_types/{paper_type}": {
             "put": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Update a specific paper type",
-                "operationId": "e3ecafd7d5314908402c188c0f08f86d",
+                "operationId": "49da592443a94d3e05e26eb574257900",
                 "parameters": [
                     {
                         "name": "paper_type",
@@ -1547,14 +1797,19 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Paper Type"
                 ],
                 "summary": "Delete a specific paper type",
-                "operationId": "01e69f53113a6aee9f83301a40c4ea8d",
+                "operationId": "f75de519143854d3519a915037cab67a",
                 "parameters": [
                     {
                         "name": "paper_type",
@@ -1587,7 +1842,12 @@
                     "404": {
                         "description": "Paper type not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/statuses": {
@@ -1611,35 +1871,12 @@
                             }
                         }
                     }
-                }
-            },
-            "post": {
-                "tags": [
-                    "Status"
-                ],
-                "summary": "Create a new status",
-                "operationId": "85739a0412fc324e86e6b45af20c7f0c",
-                "requestBody": {
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/Status"
-                            }
-                        }
-                    }
                 },
-                "responses": {
-                    "201": {
-                        "description": "The created status",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/Status"
-                                }
-                            }
-                        }
+                "security": [
+                    {
+                        "Bearer": []
                     }
-                }
+                ]
             }
         },
         "/api/statuses/{id}": {
@@ -1674,14 +1911,56 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/statuses": {
+            "post": {
+                "tags": [
+                    "Status"
+                ],
+                "summary": "Create a new status",
+                "operationId": "548cbc768800dec461afd28fc5c48381",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Status"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "The created status",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Status"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/statuses/{id}": {
             "put": {
                 "tags": [
                     "Status"
                 ],
                 "summary": "Update a status",
-                "operationId": "7ba406b9e828f2ce3a0583d7c56583f6",
+                "operationId": "3a3e4e2c2f5272415da32e0808e7db3b",
                 "parameters": [
                     {
                         "name": "id",
@@ -1716,14 +1995,19 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Status"
                 ],
                 "summary": "Delete a status",
-                "operationId": "103c323a908765c6184e33422a33a566",
+                "operationId": "45d600bd4f5c544b3c9b62660f1987ed",
                 "parameters": [
                     {
                         "name": "id",
@@ -1754,7 +2038,12 @@
                     "404": {
                         "description": "Status not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/tags": {
@@ -1783,14 +2072,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/tags": {
             "post": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Create a new tag",
-                "operationId": "a0a246f29dcb119a2189fd230fc10028",
+                "operationId": "4417e20790d4160859e3a5c2b105485f",
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1837,7 +2133,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
         "/api/tags/{tag}": {
@@ -1889,14 +2190,21 @@
                             }
                         }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/tags/{tag}": {
             "put": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Update a tag",
-                "operationId": "41b49eb4f2a830e150f50252f4d831b8",
+                "operationId": "f3ba124a4e6d33a21a5ba5025029b8f2",
                 "parameters": [
                     {
                         "name": "tag",
@@ -1969,14 +2277,19 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
                     "Tags"
                 ],
                 "summary": "Delete a tag",
-                "operationId": "0ea3c414fee89af8d1d36299a222206d",
+                "operationId": "f3b21cc865d48b3c28c3f6d5e08e50c0",
                 "parameters": [
                     {
                         "name": "tag",
@@ -2019,55 +2332,363 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
-        "/api/users": {
+        "/api/user_books": {
             "get": {
                 "tags": [
-                    "User"
+                    "UserBook"
                 ],
-                "summary": "Get all users",
-                "operationId": "c457726701591d1183b53aa71fc13441",
+                "summary": "Get all UserBook",
+                "operationId": "45c13542b83d5d2e46744d2ecdaa168f",
                 "responses": {
                     "200": {
-                        "description": "Successful operation"
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_books": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserBook"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
-            },
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/user_books/{user_book}": {
+            "get": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Get a user book by ID",
+                "operationId": "31676bd51191501016fdd7df97f998a6",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user_book": {
+                                            "$ref": "#/components/schemas/UserBook"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/user_books": {
             "post": {
                 "tags": [
-                    "User"
+                    "UserBook"
                 ],
-                "summary": "Create a new user",
-                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "summary": "Create a new user book",
+                "operationId": "c1d28a204f380ff574282c465ad04d78",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "$ref": "#/components/schemas/User"
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "book_id": {
+                                        "type": "integer"
+                                    },
+                                    "comments": {
+                                        "type": "string"
+                                    },
+                                    "purchase_price": {
+                                        "type": "number"
+                                    },
+                                    "selling_price": {
+                                        "type": "number"
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "on_sale_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "sold_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "conservation_state_id": {
+                                        "type": "integer"
+                                    },
+                                    "status_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
                             }
                         }
                     }
                 },
                 "responses": {
                     "201": {
-                        "description": "User created"
+                        "description": "User Book created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBook"
+                                }
+                            }
+                        }
                     },
                     "422": {
-                        "description": "Validation error"
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             }
         },
-        "/api/users/{id}": {
+        "/api/auth/user_books/{user_book}": {
+            "put": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Update a user book",
+                "operationId": "5314ebe6cbe09ecf85c706d66239e403",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "user_id": {
+                                        "type": "integer"
+                                    },
+                                    "book_id": {
+                                        "type": "integer"
+                                    },
+                                    "comments": {
+                                        "type": "string"
+                                    },
+                                    "purchase_price": {
+                                        "type": "number"
+                                    },
+                                    "selling_price": {
+                                        "type": "number"
+                                    },
+                                    "purchase_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "on_sale_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "sold_date": {
+                                        "type": "string",
+                                        "format": "date"
+                                    },
+                                    "conservation_state_id": {
+                                        "type": "integer"
+                                    },
+                                    "status_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User Book updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserBook"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "User Book not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "UserBook"
+                ],
+                "summary": "Delete a user book",
+                "operationId": "1946004524cfb97793b3deae3f82039f",
+                "parameters": [
+                    {
+                        "name": "user_book",
+                        "in": "path",
+                        "description": "User Book ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User Book deleted successfully"
+                    },
+                    "404": {
+                        "description": "User Book not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get all users",
+                "operationId": "c87f836c1ee8451a9140e68262d23d0f",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/admin-only/users/{id}": {
             "get": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Get a user by ID",
-                "operationId": "36a33ff774d5cba33c039dec2c3e0287",
+                "operationId": "26062c878c27d1fad92955a11b220786",
                 "parameters": [
                     {
                         "name": "id",
@@ -2085,14 +2706,83 @@
                     "404": {
                         "description": "User not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
             },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete a user",
+                "operationId": "f3a26e18f68e0556277568975f7dd3e5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "User deleted"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/users": {
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "operationId": "592819a0265360b2014512d6dbfaf0e7",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User created"
+                    },
+                    "422": {
+                        "description": "Validation error"
+                    }
+                },
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ]
+            }
+        },
+        "/api/auth/users/{id}": {
             "put": {
                 "tags": [
                     "User"
                 ],
                 "summary": "Update a user",
-                "operationId": "b9091397c8b25f12c6adb74be6ce3a5a",
+                "operationId": "fcbb6e9607caa5bd628196124be1a8a6",
                 "parameters": [
                     {
                         "name": "id",
@@ -2123,37 +2813,65 @@
                     "422": {
                         "description": "Validation error"
                     }
-                }
-            },
-            "delete": {
-                "tags": [
-                    "User"
-                ],
-                "summary": "Delete a user",
-                "operationId": "e169ebcc01eeee2f5e57e5bfc064bc7f",
-                "parameters": [
+                },
+                "security": [
                     {
-                        "name": "id",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
+                        "Bearer": []
                     }
-                ],
-                "responses": {
-                    "204": {
-                        "description": "User deleted"
-                    },
-                    "404": {
-                        "description": "User not found"
-                    }
-                }
+                ]
             }
         }
     },
     "components": {
         "schemas": {
+            "BookWithTagsAndAuthors": {
+                "title": "Book with Tags and Authors",
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "parution_date": {
+                        "type": "string"
+                    },
+                    "validated": {
+                        "type": "boolean"
+                    },
+                    "author_id": {
+                        "type": "integer"
+                    },
+                    "book_cover_id": {
+                        "type": "integer"
+                    },
+                    "paper_type_id": {
+                        "type": "integer"
+                    },
+                    "format_id": {
+                        "type": "integer"
+                    },
+                    "isbn_code_id": {
+                        "type": "integer"
+                    },
+                    "editor_id": {
+                        "type": "integer"
+                    },
+                    "tags": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Tag"
+                        }
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Author"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "Author": {
                 "title": "Author",
                 "properties": {
@@ -2162,11 +2880,11 @@
                         "readOnly": true,
                         "example": 1
                     },
-                    "name": {
+                    "firstname": {
                         "type": "string",
                         "example": "John"
                     },
-                    "surname": {
+                    "lastname": {
                         "type": "string",
                         "example": "Doe"
                     },
@@ -2177,6 +2895,12 @@
                     "updated_at": {
                         "type": "string",
                         "format": "date-time"
+                    },
+                    "books": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Book"
+                        }
                     }
                 },
                 "type": "object"
@@ -2185,8 +2909,7 @@
                 "required": [
                     "title",
                     "validated",
-                    "id_author",
-                    "id_editor"
+                    "editor_id"
                 ],
                 "properties": {
                     "id": {
@@ -2202,27 +2925,23 @@
                     "validated": {
                         "type": "boolean"
                     },
-                    "id_author": {
+                    "book_cover_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_book_cover": {
+                    "paper_type_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_paper_type": {
+                    "format_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_format": {
+                    "isbn_code_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_isbn_code": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "id_editor": {
+                    "editor_id": {
                         "type": "integer",
                         "example": 1
                     },
@@ -2230,6 +2949,12 @@
                         "type": "array",
                         "items": {
                             "type": "integer"
+                        }
+                    },
+                    "authors": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Author"
                         }
                     }
                 },
@@ -2267,11 +2992,11 @@
                         "readOnly": true,
                         "example": 1
                     },
-                    "id_book": {
+                    "book_id": {
                         "type": "integer",
                         "example": 1
                     },
-                    "id_tag": {
+                    "tag_id": {
                         "type": "integer",
                         "example": 1
                     }
@@ -2453,46 +3178,98 @@
             },
             "User": {
                 "required": [
-                    "name",
+                    "firstname",
+                    "lastname",
                     "email",
                     "password",
                     "role"
                 ],
                 "properties": {
-                    "id": {
-                        "description": "ID of the user",
-                        "type": "integer"
+                    "firstname": {
+                        "description": "First name of the user",
+                        "type": "string",
+                        "example": "Jean"
                     },
-                    "name": {
-                        "description": "Name of the user",
-                        "type": "string"
+                    "lastname": {
+                        "description": "Last name of the user",
+                        "type": "string",
+                        "example": "Michem"
                     },
                     "email": {
                         "description": "Email of the user",
                         "type": "string",
-                        "format": "email"
+                        "format": "email",
+                        "example": "test@test.test"
                     },
                     "password": {
                         "description": "Password of the user",
                         "type": "string",
-                        "writeOnly": true
+                        "writeOnly": true,
+                        "example": "$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
                     },
                     "role": {
                         "description": "Role of the user",
-                        "type": "string"
+                        "type": "boolean",
+                        "example": "0"
                     },
                     "remember_token": {
                         "description": "Remember token of the user",
                         "type": "string",
                         "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "UserBook": {
+                "required": [
+                    "user_id",
+                    "book_id"
+                ],
+                "properties": {
+                    "user_id": {
+                        "description": "ID de l'utilisateur",
+                        "type": "integer"
                     },
-                    "books": {
-                        "description": "Books owned by the user",
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Book"
-                        },
-                        "readOnly": true
+                    "book_id": {
+                        "description": "ID du livre",
+                        "type": "integer"
+                    },
+                    "comments": {
+                        "description": "Commentaires sur le livre",
+                        "type": "string"
+                    },
+                    "purchase_price": {
+                        "description": "Prix d'achat du livre",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "selling_price": {
+                        "description": "Prix de vente du livre",
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "purchase_date": {
+                        "description": "Date d'achat du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "on_sale_date": {
+                        "description": "Date de mise en vente du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "sold_date": {
+                        "description": "Date de vente du livre",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "conservation_state_id": {
+                        "description": "ID de l'état de conservation du livre",
+                        "type": "integer"
+                    },
+                    "status_id": {
+                        "description": "ID du statut du livre",
+                        "type": "integer"
                     }
                 },
                 "type": "object"

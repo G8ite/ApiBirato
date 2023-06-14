@@ -27,8 +27,8 @@ class BookTagFactory extends Factory
         $tagIds = Tag::pluck('id')->toArray();
 
         return [
-            'id_book' => $this->faker->randomElement($bookIds),
-            'id_tag' => $this->faker->randomElement($tagIds),
+            'book_id' => $this->faker->randomElement($bookIds),
+            'tag_id' => $this->faker->randomElement($tagIds),
         ];
         
     }

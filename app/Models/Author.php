@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Model;
  *     schema="Author",
  *     title="Author",
  *     @OA\Property(property="id", type="integer", readOnly=true, example=1),
- *     @OA\Property(property="name", type="string", example="John"),
- *     @OA\Property(property="surname", type="string", example="Doe"),
+ *     @OA\Property(property="firstname", type="string", example="John"),
+ *     @OA\Property(property="lastname", type="string", example="Doe"),
  *     @OA\Property(property="created_at", type="string", format="date-time"),
- *     @OA\Property(property="updated_at", type="string", format="date-time")
+ *     @OA\Property(property="updated_at", type="string", format="date-time"),
+ *     @OA\Property(property="books", type="array", @OA\Items(ref="#/components/schemas/Book"))
  * )
  */
 class Author extends Model
@@ -21,7 +22,17 @@ class Author extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'surname',
+        'firstname',
+        'lastname',
     ];
+
+    public function books()
+    {
+        return $this->hasMany(Book::class);
+    }
+
+    public function bookAuthors()
+    {
+        return $this->belongsToMany(Book::class, 'book_author', 'author_id', 'book_id');
+    }
 }

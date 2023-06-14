@@ -19,15 +19,15 @@ class BookResource extends JsonResource
             'title' => $this->title,
             'parution_date' => $this->parution_date,
             'validated' => $this->validated,
-            'id_author' => $this->id_author,
-            'id_book_cover' => $this->id_book_cover,
-            'id_paper_type' => $this->id_paper_type,
-            'id_format' => $this->id_format,
-            'id_isbn_code' => $this->id_isbn_code,
-            'id_editor' => $this->id_editor,
+            'book_cover_id' => $this->book_cover_id,
+            'paper_type_id' => $this->paper_type_id,
+            'format_id' => $this->format_id,
+            'isbn_code_id' => $this->isbn_code_id,
+            'editor_id' => $this->editor_id,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'tags' => TagResource::collection($this->whenLoaded('tags'))
+            'tags' => TagResource::collection($this->whenLoaded('bookTags')),
+            'authors' => AuthorResource::collection($this->whenLoaded('bookAuthors')),
         ];
     }
 }

@@ -18,7 +18,10 @@ class FormatController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="formats", type="array", @OA\Items(ref="#/components/schemas/Format"))
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function index()
@@ -30,7 +33,7 @@ class FormatController extends Controller
 
     /**
      * @OA\Post(
-     *     path="/api/formats",
+     *     path="/api/auth/formats",
      *     tags={"Formats"},
      *     summary="Create a new format",
      *     @OA\RequestBody(
@@ -52,7 +55,10 @@ class FormatController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function store(Request $request)
@@ -91,7 +97,10 @@ class FormatController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function show(Format $format)
@@ -101,7 +110,7 @@ class FormatController extends Controller
 
     /**
      * @OA\Put(
-     *     path="/api/formats/{format}",
+     *     path="/api/admin-only/formats/{format}",
      *     tags={"Formats"},
      *     summary="Update a format",
      *     @OA\Parameter(
@@ -137,7 +146,10 @@ class FormatController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function update(Request $request, Format $format)
@@ -153,7 +165,7 @@ class FormatController extends Controller
 
     /**
      * @OA\Delete(
-     *     path="/api/formats/{format}",
+     *     path="/api/admin-only/formats/{format}",
      *     tags={"Formats"},
      *     summary="Delete a format",
      *     @OA\Parameter(
@@ -176,11 +188,16 @@ class FormatController extends Controller
      *         @OA\JsonContent(
      *             @OA\Property(property="error", type="string")
      *         )
-     *     )
+     *     ),
+     *     security={
+     *         {"Bearer": {}}
+     *     }
      * )
      */
     public function delete(Format $format)
     {
+        $format->books()->update(['format_id' => null]);
+
         $format->delete();
 
         return response()->json(['message' => 'Format deleted successfully']);

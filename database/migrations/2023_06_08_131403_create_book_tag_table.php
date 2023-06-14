@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('book_tag', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_book');
-            $table->unsignedBigInteger('id_tag');
+            $table->unsignedBigInteger('book_id');
+            $table->unsignedBigInteger('tag_id');
             $table->timestamps();
 
-            $table->foreign('id_book')->references('id')->on('books');
-            $table->foreign('id_tag')->references('id')->on('tags');
+            $table->foreign('book_id')->references('id')->on('books')->constrained()->onDelete('cascade');
+            $table->foreign('tag_id')->references('id')->on('tags')->constrained()->onDelete('cascade');
         });
     }
 

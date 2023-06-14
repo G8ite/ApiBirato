@@ -12,46 +12,44 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 /**
  * @OA\Schema(
  *     schema="User",
- *     required={"name", "email", "password", "role"},
+ *     required={"firstname", "lastname", "email", "password", "role"},
  *     @OA\Property(
- *         property="id",
- *         type="integer",
- *         description="ID of the user"
- *     ),
- *     @OA\Property(
- *         property="name",
+ *         property="firstname",
  *         type="string",
- *         description="Name of the user"
+ *         description="First name of the user",
+ *         example="Jean"
+ *     ),
+ *    @OA\Property(
+ *        property="lastname",
+ *        type="string",
+ *        description="Last name of the user",
+ *        example="Michem"
  *     ),
  *     @OA\Property(
  *         property="email",
  *         type="string",
  *         format="email",
- *         description="Email of the user"
+ *         description="Email of the user",
+ *         example="test@test.test"
  *     ),
  *     @OA\Property(
  *         property="password",
  *         type="string",
  *         description="Password of the user",
- *         writeOnly=true
+ *         writeOnly=true,
+ *         example="$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi"
  *     ),
  *     @OA\Property(
  *         property="role",
- *         type="string",
- *         description="Role of the user"
+ *         type="boolean",
+ *         description="Role of the user",
+ *         example="0"
  *     ),
  *     @OA\Property(
  *         property="remember_token",
  *         type="string",
  *         nullable=true,
  *         description="Remember token of the user"
- *     ),
- *     @OA\Property(
- *         property="books",
- *         type="array",
- *         @OA\Items(ref="#/components/schemas/Book"),
- *         description="Books owned by the user",
- *         readOnly=true
  *     )
  * )
  */
@@ -65,10 +63,11 @@ class User extends Authenticatable implements JWTSubject
      * @var array<int, string, bool>
      */
     protected $fillable = [
-        'name',
-        'surname',
+        'firstname',
+        'lastname',
         'email',
-        'role'
+        'role',
+        'password',
     ];
 
     /**
@@ -102,7 +101,8 @@ class User extends Authenticatable implements JWTSubject
 
     public function books()
     {
-        return $this->hasMany(Book::class);
+        return $this->belongsToMany(Book::class, 'book_user', 'user_id', 'book_id');
     }
+
 }
 
