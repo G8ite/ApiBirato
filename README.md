@@ -70,7 +70,24 @@ cp .env.example .env
 ```
 
 <br>
-Créez une base de données dans phpMyAdmin avec le nom "abirato_lrv" et l'encodage "utf8mb3_general_ci".
+
+### Créez une base de données dans phpMyAdmin avec le nom "abirato_lrv" et l'encodage "utf8mb3_general_ci".
+
+### Initialiser tymon/jwt-auth
+
+<br>
+
+```shell
+php artisan vendor:publish --provider="Tymon\JWTAuth\Providers\LaravelServiceProvider"
+```
+
+<br>
+
+```shell
+php artisan jwt:secret
+```
+
+Vérifiez que JWT_SECRET a été ajouté à votre .env, sinon ajoutez le.
 
 <br>
 
