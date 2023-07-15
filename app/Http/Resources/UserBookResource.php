@@ -26,6 +26,7 @@ class UserBookResource extends JsonResource
             'sold_date' => $this->sold_date,
             'conservation_state_id' => $this->conservation_state_id,
             'status_id' => $this->status_id,
+            'book' => new BookResource($this->whenLoaded('book')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

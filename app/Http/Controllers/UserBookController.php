@@ -72,6 +72,15 @@ class UserBookController extends Controller
         return new UserBookResource($userBook);
     }
 
+    public function showLast(UserBook $userBook)
+    {
+        $userbooks = UserBook::with('book','book.bookTags','book.bookAuthors')
+                        ->orderBy('created_at', 'desc')
+                        ->take(3)
+                        ->get();
+        
+        return UserBookResource::collection($userbooks);
+    }
     /**
      * @OA\Post(
      *     path="/api/auth/user_books",

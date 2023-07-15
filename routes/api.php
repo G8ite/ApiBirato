@@ -133,6 +133,7 @@ Route::middleware('api')->group(function (){
     // User Books
     Route::get('/user_books', [UserBookController::class, 'index']);
     Route::get('/user_books/{user_book}', [UserBookController::class, 'show']);
+    Route::get('/userbooks/last', [UserBookController::class, 'showLast']);
 });
 
 Route::group([
