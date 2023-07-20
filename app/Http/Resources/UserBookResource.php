@@ -24,6 +24,8 @@ class UserBookResource extends JsonResource
             'purchase_date' => $this->purchase_date,
             'on_sale_date' => $this->on_sale_date,
             'sold_date' => $this->sold_date,
+            'on_ebay' => $this->on_ebay,
+            'ebay_url' => $this->ebay_url,
             'conservation_state_id' => $this->conservation_state_id,
             'status_id' => $this->status_id,
             'book' => new BookResource($this->whenLoaded('book')),

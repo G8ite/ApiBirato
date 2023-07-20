@@ -73,6 +73,11 @@ class ConservationStateController extends Controller
         return new ConservationStateResource($conservation_state);
     }
 
+    public function showByStateName($name) {
+        $states = ConservationState::where('state_name', $name)
+                        ->first();
+        return $states;
+    }
     /**
      * @OA\Post(
      *     path="/api/admin-only/conservation_states",

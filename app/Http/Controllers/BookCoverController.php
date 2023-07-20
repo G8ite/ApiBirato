@@ -62,7 +62,12 @@ class BookCoverController extends Controller
     {
         return response()->json(['book_cover' => $book_cover]);
     }
-
+    public function showByCoverName($name) {
+        $bookcovers = BookCover::where('book_cover_name', $name)
+                        ->first();
+    
+        return $bookcovers;
+    }
     /**
      * @OA\Post(
      *     path="/api/auth/book_covers",

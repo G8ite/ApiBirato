@@ -108,6 +108,12 @@ class FormatController extends Controller
         return response()->json(['format' => $format]);
     }
 
+    public function showByFormatName($name) {
+        $formats = Format::where('format_name', $name)
+                        ->first();
+    
+        return $formats;
+    }
     /**
      * @OA\Put(
      *     path="/api/admin-only/formats/{format}",

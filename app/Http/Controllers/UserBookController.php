@@ -7,6 +7,7 @@ use App\Http\Resources\UserBookResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Facades\JWTAuth;
+use Illuminate\Support\Facades\Log;
 
 class UserBookController extends Controller
 {
@@ -72,6 +73,16 @@ class UserBookController extends Controller
         return new UserBookResource($userBook);
     }
 
+    public function showUserBooks()
+    {
+        $user = JWTAuth::parseToken()->authenticate();
+        $userBooks = UserBook::with('book', 'book.bookTags', 'book.bookAuthors')
+            ->where('user_id', $user->id)
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return UserBookResource::collection($userBooks);
+    }
+
     public function showLast(UserBook $userBook)
     {
         $userbooks = UserBook::with('book','book.bookTags','book.bookAuthors')
@@ -120,8 +131,11 @@ class UserBookController extends Controller
      */
     public function store(Request $request)
     {
+        // récupérer le token de l'utilisateur
+        $user = JWTAuth::parseToken()->authenticate();
+        $request->merge(['user_id' => $user->id]);
+        
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|exists:users,id',
             'book_id' => 'required|exists:books,id',
             'comments' => 'nullable|string',
             'purchase_price' => 'required|numeric',
@@ -129,6 +143,8 @@ class UserBookController extends Controller
             'purchase_date' => 'required|date',
             'on_sale_date' => 'nullable|date',
             'sold_date' => 'nullable|date',
+            'on_ebay'   => 'nullable|boolean',
+            'ebay_link' => 'nullable|string',
             'conservation_state_id' => 'required|exists:conservation_states,id',
             'status_id' => 'required|exists:statuses,id',
         ]);

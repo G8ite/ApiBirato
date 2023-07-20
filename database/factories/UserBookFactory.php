@@ -33,6 +33,8 @@ class UserBookFactory extends Factory
             'purchase_date' => $purchaseDate,
             'on_sale_date' => $onSaleDate,
             'sold_date' => $soldDate,
+            'on_ebay' => $this->faker->boolean,
+            'ebay_url' => $this->faker->url,
             'conservation_state_id' => $this->faker->randomElement($conservationStateIDs),
             'status_id' => $this->faker->randomElement($statusIDs),
         ];

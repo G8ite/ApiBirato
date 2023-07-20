@@ -90,6 +90,14 @@ class AuthorController extends Controller
         return new AuthorResource($author);
     }
 
+    public function showByName($firstName, $lastName) {
+        $authors = Author::where('firstname', $firstName)
+                        ->where('lastname',  $lastName)
+                        ->get();
+    
+        return $authors;
+    }
+
     /**
      * @OA\Put(
      *     path="/api/admin-only/authors/{author}",

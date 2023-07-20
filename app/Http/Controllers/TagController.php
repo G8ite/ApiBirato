@@ -108,6 +108,12 @@ class TagController extends Controller
         return response()->json(['tag' => $tag]);
     }
 
+    public function showByTagName(string $name)
+    {
+        $tag = Tag::where('tag_name', $name)->first();
+
+        return $tag;
+    }
     /**
      * @OA\Put(
      *     path="/api/admin-only/tags/{tag}",

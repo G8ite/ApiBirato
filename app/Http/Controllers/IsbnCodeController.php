@@ -70,6 +70,14 @@ class IsbnCodeController extends Controller
         return new IsbnCodeResource($isbnCode);
     }
 
+    public function showByCode($isbnCode)
+    {
+        $codes = IsbnCode::where('code', $isbnCode)
+                        ->first();
+    
+        return $codes;
+    }
+
     /**
      * @OA\Post(
      *     path="/api/auth/isbn_codes",
@@ -203,96 +211,75 @@ class IsbnCodeController extends Controller
      */
     public function search(string $isbnCode)
     {
-
         $isbnCodeTest = IsbnCode::where('code', $isbnCode)->first();
 
         if ($isbnCodeTest) {
-            $book = Book::where('isbn_code_id', $isbnCodeTest->id)->first();
-            
+            $book = Book::where('isbn_code_id', $isbnCodeTest->id)
+            ->with('bookTags','bookAuthors')
+            ->first();
 
             if ($book) {
-                $book->load('tags', 'authors');
-                $book->save();
-                
                 return response()->json([
                     'message' => 'Book found',
-                    'book' => new BookResource($book)
+                    'book' => $book
                 ]);
             }
         }
 
-
-        $url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:'. $isbnCode;
+        $url = 'https://www.googleapis.com/books/v1/volumes?q=isbn:' . $isbnCode;
 
         $response = Http::withOptions(['verify' => false])->get($url);
 
         $json = $response->json();
+
+        if ($json['totalItems'] == 0) {
+            return response()->json([
+                'message' => 'Book not found',
+            ]);
+        }
 
         // récupération des données
         $title = $json['items'][0]['volumeInfo']['title'];
         $authors = $json['items'][0]['volumeInfo']['authors'];
         $publishedDate = $json['items'][0]['volumeInfo']['publishedDate'];
         $validated = false;
-        $publisher = $json['items'][0]['volumeInfo']['publisher'];
-        $count = 0;
-        
-        foreach ($authors as $author) {
-            
-            $author = explode(' ', $author);
+        $publisher = isset($json['items'][0]['volumeInfo']['publisher']) ? $json['items'][0]['volumeInfo']['publisher'] : null;
 
-            
-            $authorTest = Author::where('firstname', $author[0])->where('lastname', $author[1])->first();
-
-            if (!$authorTest) {
-                $authorTest = Author::create([
-                    'firstname' => $author[0],
-                    'lastname' => $author[1]
-                ]);
-
-                $authors[$count] = $authorTest;
-            }
-
-            $authors[$count] = $authorTest;
-
-            $count++;
-        }
-
-        $editorTest = Editor::where('editor_name', $publisher)->first();
-
-        if (!$editorTest) {
-            $editorTest = Editor::create([
-                'editor_name' => $publisher,
-            ]);
-        }
-
-        $book = Book::create([
+        $bookData = [
             'title' => $title,
             'validated' => $validated,
             'parution_date' => $publishedDate,
-            'validated' => $validated,
-            'editor_id' => $editorTest->id ?? null,
-            'authors' => $authors,
-        ]);
+        ];
 
-        foreach ($authors as $author) {
-            BookAuthor::create([
-                'book_id' => $book->id,
-                'author_id' => $author->id,
-            ]);
+        if ($publisher) {
+            $editorTest = Editor::where('editor_name', $publisher)->first();
+            if (!$editorTest) {
+                $editorTest = Editor::create([
+                    'editor_name' => $publisher,
+                ]);
+            }
+            $bookData['editor_id'] = $editorTest->id;
         }
-        
-        $isbnCode = IsbnCode::create([
-            'code' => $isbnCode,
-            'validated' => $validated,
-            'book_id' => $book->id,
-        ]);
 
-        $book->isbn_code_id = $isbnCode->id;
-        $book->save();
+        // Traitement des auteurs
+        $authorsData = [];
+        foreach ($authors as $author) {
+            $authorData = explode(' ', $author);
+            $authorTest = Author::where('firstname', $authorData[0])->where('lastname', $authorData[1])->first();
+            if (!$authorTest) {
+                $authorTest = Author::create([
+                    'firstname' => $authorData[0],
+                    'lastname' => $authorData[1]
+                ]);
+            }
+            $authorsData[] = $authorTest;
+        }
+        $bookData['authors'] = $authorsData;
 
         return response()->json([
-            'message' => 'Book created',
-            'book' => new BookResource($book)
-        ]);     
+            'message' => 'Book found',
+            'book' => $bookData,
+            'authors' => '$authorsData'
+        ]);
     }
 }

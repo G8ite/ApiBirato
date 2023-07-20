@@ -106,6 +106,12 @@ class PaperTypeController extends Controller
         return new PaperTypeResource($paper_type);
     }
 
+    public function showByPaperTypeName($name) {
+        $papertypes = PaperType::where('paper_type_name', $name)
+                        ->first();
+    
+        return $papertypes;
+    }
     /**
      * @OA\Put(
      *     path="/api/admin-only/paper_types/{paper_type}",
