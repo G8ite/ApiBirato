@@ -89,38 +89,49 @@ Route::middleware('api')->group(function (){
     // Tags
     Route::get('/tags', [TagController::class, 'index']);
     Route::get('/tags/{tag}', [TagController::class, 'show']);
+    Route::get('/tags/show/{name}', [TagController::class, 'showByTagName']);
     
     // Formats
     Route::get('/formats', [FormatController::class, 'index']);
     Route::get('/formats/{format}', [FormatController::class, 'show']);
+    Route::get('/formats/show/{name}', [FormatController::class, 'showByFormatName']);
+
 
     // Book Covers
     Route::get('/book_covers', [BookCoverController::class, 'index']);
     Route::get('/book_covers/{book_cover}', [BookCoverController::class, 'show']);
+    Route::get('/book_covers/show/{name}', [BookCoverController::class, 'showByCoverName']);
 
     // Paper Types
     Route::get('/paper_types', [PaperTypeController::class, 'index']);
     Route::get('/paper_types/{paper_type}', [PaperTypeController::class, 'show']);
+    Route::get('/paper_types/show/{name}', [PaperTypeController::class, 'showByPaperTypeName']);
 
     // Authors
     Route::get('/authors', [AuthorController::class, 'index']);
     Route::get('/authors/{author}', [AuthorController::class, 'show']);
+    Route::get('/authors/{firstName}/{lastName}', [AuthorController::class, 'showByName']);
 
     // Editors
     Route::get('/editors', [EditorController::class, 'index']);
     Route::get('/editors/{editor}', [EditorController::class, 'show']);
+    Route::get('/editors/show/{name}', [EditorController::class, 'showByEditorName']);
 
     // Statuses
     Route::get('/statuses', [StatusController::class, 'index']);
     Route::get('/statuses/{status}', [StatusController::class, 'show']);
+    Route::get('/statuses/show/{name}', [StatusController::class, 'showByStatusName']);
+
 
     // Conservation States
     Route::get('/conservation_states', [ConservationStateController::class, 'index']);
     Route::get('/conservation_states/{conservation_state}', [ConservationStateController::class, 'show']);
+    Route::get('/conservation_states/show/{name}', [ConservationStateController::class, 'showByStateName']);
 
     // ISBN Codes
     Route::get('/isbn_codes', [IsbnCodeController::class, 'index']);
     Route::get('/isbn_codes/{isbn_code}', [IsbnCodeController::class, 'show']);
+    Route::get('/isbn_codes/show/{code}', [IsbnCodeController::class, 'showByCode']);
 
 
     // Books
@@ -133,6 +144,7 @@ Route::middleware('api')->group(function (){
     // User Books
     Route::get('/user_books', [UserBookController::class, 'index']);
     Route::get('/user_books/{user_book}', [UserBookController::class, 'show']);
+    Route::get('/userbooks/last', [UserBookController::class, 'showLast']);
 });
 
 Route::group([
@@ -179,4 +191,5 @@ Route::group([
     Route::post('/user_books', [UserBookController::class, 'store']);
     Route::put('/user_books/{user_book}', [UserBookController::class, 'update']);
     Route::delete('/user_books/{user_book}', [UserBookController::class, 'delete']);
+    Route::get('/user_books/search/', [UserBookController::class, 'showUserBooks']);
 });

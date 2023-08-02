@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Status;
 use App\Http\Resources\StatusResource;
 use Illuminate\Http\Request;
+use NunoMaduro\Collision\Adapters\Phpunit\State;
 
 /**
  * @OA\Tag(name="Status")
@@ -67,6 +68,11 @@ class StatusController extends Controller
         return new StatusResource($status);
     }
 
+    public function showByStatusName($name) {
+        $statuses = Status::where('name', $name)
+                        ->first();
+        return $statuses;
+    }
     /**
      * @OA\Post(
      *     path="/api/admin-only/statuses",

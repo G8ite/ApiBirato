@@ -35,6 +35,8 @@ class UserBook extends Model
         'purchase_date',
         'on_sale_date',
         'sold_date',
+        'on_ebay' ,
+        'ebay_url',
         'conservation_state_id',
         'status_id'
     ];

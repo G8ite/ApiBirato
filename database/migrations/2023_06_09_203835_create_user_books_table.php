@@ -23,6 +23,8 @@ return new class extends Migration
             $table->date('purchase_date')->nullable();
             $table->date('on_sale_date')->nullable();
             $table->date('sold_date')->nullable();
+            $table->boolean('on_ebay')->default(false);
+            $table->string('ebay_url')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->constrained()->onDelete('cascade');

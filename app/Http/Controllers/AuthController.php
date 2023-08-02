@@ -69,7 +69,6 @@ class AuthController extends Controller
         // TODO: Mettre à jour le token de l'utilisateur
         //       Stocker le token dans le storage de l'application
         $credentials = request(['email', 'password']);
-
         if (! $token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

@@ -62,7 +62,12 @@ class EditorController extends Controller
     {
         return new EditorResource($editor);
     }
-
+    public function showByEditorName($name) {
+        $editors = Editor::where('editor_name', $name)
+                        ->first();
+    
+        return $editors;
+    }
     /**
      * @OA\Post(
      *     path="/api/auth/editors",
